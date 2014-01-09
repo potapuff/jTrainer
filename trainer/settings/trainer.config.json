@@ -1,0 +1,10 @@
+{
+    "TRAINER_NAME": "Russian",
+    "TRAINER_SCORE": 15,
+
+    "LANGUAGES": {
+        "ru": "Russian",
+        "eng": "English"
+    },
+    "DEFAULT_LANG": "ru"
+}

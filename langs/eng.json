@@ -1,0 +1,8 @@
+{
+    "local"     :  "English",
+    "lang":     {
+                 "TRAINER_NAME"        :   "Title",
+                 "NEXT_STEP"           :   "Next step",
+                 "PREV_STEP"           :   "Prev step"
+                }
+}

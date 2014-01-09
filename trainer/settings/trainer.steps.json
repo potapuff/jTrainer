@@ -1,0 +1,12 @@
+[
+    {
+        "filename"      :   "introduction",
+        "score"         :   14,
+        "hasScript"     :   true
+    },
+    {
+        "filename"      :   "introduction2",
+        "score"         :   14,
+        "hasScript"     :   false
+    }
+]
