@@ -8,9 +8,15 @@ $(document).ready(function () {
     Service.loadConfig(function () {
         var config = Service.getTrainerConfig();
         if (config['TRAINER_NAME'])
-            Templatetor.extendConstView({TRAINER_NAME: config['TRAINER_NAME']});
-        console.log(window.location.hash.find);
-        I18N.setAvailbleLanguages(config['LANGUAGES']).setLanguage(config['DEFAULT_LANG']);
+            Templatetor.extendConstView(config['vars']);
+
+        I18N.setAvailbleLanguages(config['LANGUAGES']);
+        var hash = window.location.hash;
+        if (hash.indexOf('lang=') != -1)
+            I18N.setLanguage(hash.substr(6,2));
+        else
+            I18N.setLanguage(config['DEFAULT_LANG']);
+
         I18N.loadLanguage(function () {
             Templatetor.extendConstView(I18N.getConstants());
             var LList = new LangList().setLangs(I18N.getLangNames()).render();
@@ -19,5 +25,4 @@ $(document).ready(function () {
             Rotator.init();
         });
     });
-
 });

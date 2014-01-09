@@ -6,7 +6,7 @@ var LangList = null;
             var LOGGER = new Log('Element LangList');
             var TEMPLATOR = new Tpl();
 
-            var pattern = '<li><a href="#%lang%">%name%</a></li>';
+            var pattern = '<li><a href="#lang=%lang%">%name%</a></li>';
             var langs = [];
 
             this.setLangs = function (l) {

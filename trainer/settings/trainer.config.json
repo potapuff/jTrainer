@@ -1,10 +1,11 @@
 {
-    "TRAINER_NAME": "Russian",
-    "TRAINER_SCORE": 15,
-
+    "vars": {
+        "TRAINER_NAME": "Russian",
+        "TRAINER_SCORE": 15
+    },
     "LANGUAGES": {
         "ru": "Russian",
-        "eng": "English"
+        "en": "English"
     },
     "DEFAULT_LANG": "ru"
 }
