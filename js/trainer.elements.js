@@ -1,12 +1,12 @@
 var LangList = null;
 
-(function($, Log, Tpl) {
+(function($, _Logger, _Templatetor) {
     LangList =
         function () {
-            var LOGGER = new Log('Element LangList');
-            var TEMPLATOR = new Tpl();
+            var LOGGER = new _Logger('Element LangList');
+            var TEMPLATOR = new _Templatetor();
 
-            var pattern = '<li><a href="#lang=%lang%">%name%</a></li>';
+            var pattern = '<li><a href="?lang=%lang%">%name%</a></li>';
             var langs = [];
 
             this.setLangs = function (l) {
@@ -17,21 +17,21 @@ var LangList = null;
             }
 
             this.setPattern = function (p) {
-                if (typeof p !== "string" && p.indexOf('%name%') != -1 && p.indexOf('%lang%') != -1)
+                if (p.indexOf('%name%') != -1 && p.indexOf('%lang%') != -1)
                     pattern = p;
                 return this;
             }
 
             this.render = function () {
-                LOGGER.debug(langs);
-
+                LOGGER.debug(pattern, langs);
+                console.log(pattern);
                 var result = '';
                 for (var key in langs) {
                     if (langs.hasOwnProperty(key)) {
                         result += pattern.replace('%lang%', key).replace('%name%', langs[key]);
                     }
                 }
-                if (TEMPLATOR.teplatable(result))
+                if (_Templatetor.teplatable(result))
                     result = TEMPLATOR.setTemplate(result).parse();
                 return result;
             }
@@ -40,17 +40,16 @@ var LangList = null;
 
 var Select = null;
 
-(function($, Log, Tpl, Src) {
+(function($, _Logger, _Templatetor) {
     Select =
         function (n) {
-            var LOGGER = new Log('Element Select');
-            var TEMPLATETOR = new Tpl();
+            var LOGGER = new _Logger('Element Select');
+            var TEMPLATETOR = new _Templatetor();
 
             var name = n;
             var style = '';
             var classes = ['form-control'];
             var options = [];
-
             this.setName = function (nm) {
                 if (typeof nm === "string")
                     name = nm;
@@ -73,8 +72,7 @@ var Select = null;
             }
 
             this.addOption = function (text, value) {
-                if ((typeof text === "string") && (typeof value === "string"))
-                    options[text] = Src.hashCode(value);
+                options[text] = value;
                 return this;
             }
             
@@ -87,27 +85,27 @@ var Select = null;
             }
             
             this.render = function () {
-                var result = '<select name="' + name + '" class="' + classes.join(' ') + (style != '' ? (' style="' + style + '"') : '') +'>';
+                var result = '<div class="form-group" for="' + name + '"><select name="' + name + '" class="' + classes.join(' ') + '"' + (style != '' ? (' style="' + style + '"') : '') +'><option value="-1">{{CHOOSE_SELECT}}</option>';
                 for (var key in options){
                     if (options.hasOwnProperty(key)) {
                         result += '<option value="' + options[key] + '">' + key + '</option>\n';
                     }
                 }
-                result += '</select>';
-                if (TEMPLATETOR.teplatable(result))
-                    result = TEMPLATETOR.setTemplate(result).parse();
+                result += '</select></div>';
+                if (_Templatetor.teplatable(result))
+                    result = TEMPLATETOR.setTemplate(result).render();
                 return result;
             }
         }
-})(jQuery, Logger, Templatetor, Service);
+})(jQuery, Logger, Templatetor);
 
 var TextInput = null;
 
-(function($, Log, Tpl) {
+(function($, _Logger, _Templatetor) {
     TextInput =
         function (n) {
-            var LOGGER = new Log('Element TextInput');
-            var TEMPLATOR = new Tpl();
+            var LOGGER = new _Logger('Element TextInput');
+            var TEMPLATOR = new _Templatetor();
 
             var name = n;
             var style = '';
@@ -150,9 +148,9 @@ var TextInput = null;
             }
 
             this.render = function () {
-                var result = '<input type="text" name="' + name + '" class="' + classes.join(' ') + (style != '' ? (' style="' + style + '"') : '') +' placeholder="' + placeholder + '">';
-                if (TEMPLATOR.teplatable(result))
-                    result = TEMPLATOR.setTemplate(result).parse();
+                var result = '<div class="form-group" for="' + name + '"><input type="text" name="' + name + '" class="' + classes.join(' ') + '"' + (style != '' ? (' style="' + style + '"') : '') +' placeholder="' + placeholder + '"></div>';
+                if (_Templatetor.teplatable(result))
+                    result = TEMPLATOR.setTemplate(result).render();
                 return result;
             }
         }

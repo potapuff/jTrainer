@@ -1,11 +1,31 @@
 {
     "local": "Русский",
     "lang": {
-        "TRAINER_NAME": "Название",
+        "TRAINER_NAME": "Название тренажера",
+        "TRAINER_TOPIC": "Тема тренажера",
+        "TRAINER_SCORE": "999",
+        "TOPIC": "Тема",
+        "MAX_SCORE": "Количество баллов",
         "NEXT_STEP": "Следующий шаг",
         "PREV_STEP": "Пред. шаг",
-        "YOU": "Вы",
         "ENTER_TEXT": "Введите текст",
-        "CHOOSE_LANG": "Выберите язык"
+        "CHOOSE_LANG": "Выберите язык",
+        "CHOOSE_SELECT": "Выберите элемент из списка",
+
+        "ELEMENTSTEST_OPTION_ONE": "Элемент 1",
+        "ELEMENTSTEST_OPTION_TWO": "Элемент 2",
+        "ELEMENTSTEST_OPTION_THREE": "Элемент 3 (правильный)",
+        "ELEMENTSTEST_TITLE": "Проверка некоторых элементов...",
+        "ELEMENTSTEST_CHOOSE_WRITE_OPTION": "Выберите правильный элемент из списка",
+        "ELEMENTSTEST_ENTER_TEST": "Введите в поле текст 'test'",
+
+        "RESULTS_TITLE": "Ваши результаты",
+        "RESULTS_START_TIME": "Время начала тестирования",
+        "RESULTS_END_TIME": "Время окончания тестирования",
+        "RESULTS_TIME_DIFF": "Время выполнения",
+        "RESULTS_TIME_SEC": "сек.",
+        "RESULTS_YOUR_SCORE": "Вы набрали",
+        "RESULTS_POINTS": "очков"
+
     }
 }

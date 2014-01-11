@@ -1,31 +1,65 @@
-.verification {
-    display:none;
+.modal-static {
+    position: fixed;
+    top: 50% !important;
+    left: 50% !important;
+    margin-top: -100px;
+    margin-left: -100px;
+    overflow: visible !important;
 }
-.verification.success, .verification.error {
-    display:block;
+
+.modal-static,
+.modal-static .modal-dialog,
+.modal-static .modal-content {
+    width: 200px;
+    height: 200px;
+}
+
+.modal-static .modal-dialog,
+.modal-static .modal-content {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.has-success .form-control {
+    -webkit-box-shadow: inset 0 0.5px 0.5px rgba(0,0,0,0.075),0 0 3px #67b168;
+    box-shadow: inset 0 0.5px 0.5px rgba(0,0,0,0.075),0 0 3px #67b168;
+}
+
+.has-error .form-control {
+    -webkit-box-shadow: inset 0 0.5px 0.5px rgba(0,0,0,0.075),0 0 3px #ce8483;
+    box-shadow: inset 0 0.5px 0.5px rgba(0,0,0,0.075),0 0 3px #ce8483;
+}
+
+body {
+    background-image:url("../img/trainer/trainer-background.png");
 }
 
 .navbar-brand.trainer-brand {
-    background: url("../img/trainer-brand.png") 5px 50% no-repeat;
+    background: url("../img/trainer/trainer-brand.png") 5px 50% no-repeat;
     background-size: 40px 40px;
-    padding-left:55px;
+    padding-left: 55px;
     color: #efc84a;
 }
+
 .navbar-brand.trainer-brand:hover {
     color: #d14f3a;
 }
+
 section.stepspace {
     margin: 0 20px;
 }
+
 div.step {
-    display:none;
+    display: none;
     z-index: 0;
 }
+
 div.step.current {
-    display:block;
+    display: block;
     z-index: 1;
 }
+
 div[data-element="latex"] {
-    display:inline-block;
-    padding:3px;
+    display: inline-block;
+    padding: 3px;
 }

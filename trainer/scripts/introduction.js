@@ -1,13 +1,14 @@
 var introduction = function () {
     this.preDispatch = function () {
-        alert("Before dispatch");
     }
     
     this.postDispatch = function () {
-        alert("After displacth");
     }
-    
+
     this.mustache = function () {
-        return {win:    "ВЫЙГРАЛИ ПРИЗ"}
+        return {LANGS:    new LangList().setLangs(I18N.getLangNames())
+                                        .setPattern('<option value="%lang%">%name%</option>')
+                                        .render()
+                }
     }
 }

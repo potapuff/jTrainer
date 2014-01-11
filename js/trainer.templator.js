@@ -106,28 +106,25 @@ var Templatetor = null;
                 replaceMode = false;
                 return this;
             }
-
-            this.teplatable = function (text) {
-                var txt;
-                if (text instanceof $)
-                    txt = text.html();
-                else if (typeof text === "string") {
-                    txt = text;
-                }
-                else {
-                    LOGGER.error('Unknown type of template >> typeof = ' + typeof text);
-                    LOGGER.error(text);
-                    LOGGER.error('<<');
-                    return;
-                }
-                return txt.indexOf("oo") != -1;
-            }
         }
 })(jQuery, Mustache, Logger);
 
 Templatetor.constructor.prototype.constView = {};
+
 Templatetor.constructor.prototype.extendConstView = function (o) {
     if (typeof(o) === "object")
         $.extend(Templatetor.constructor.prototype.constView, o);
     console.log(Templatetor.constructor.prototype.constView);
+}
+
+Templatetor.constructor.prototype.teplatable = function (text) {
+    var txt;
+    if (text instanceof $)
+        txt = text.html();
+    else if (typeof text === "string") {
+        txt = text;
+    } else {
+        return false;
+    }
+    return txt.indexOf("{{") != -1;
 }

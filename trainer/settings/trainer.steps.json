@@ -1,12 +1,17 @@
 [
     {
         "filename"      :   "introduction",
-        "score"         :   14,
+        "score"         :   0,
         "hasScript"     :   true
     },
     {
-        "filename"      :   "introduction2",
-        "score"         :   14,
-        "hasScript"     :   false
+        "filename"      :   "elementstest",
+        "score"         :   15,
+        "hasScript"     :   true
+    },
+    {
+        "filename"      :   "results",
+        "score"         :   0,
+        "hasScript"     :   true
     }
 ]

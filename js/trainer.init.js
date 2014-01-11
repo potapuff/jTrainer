@@ -1,28 +1,41 @@
 $(document).ready(function () {
+    Cogwheel.setCogWheelElement($('#cogwheel-modal'))
+        .setCogWheelDescElement($('#cogwheel-desc'))
+        .setText('Init started')
+        .show();
+
+    $.ajaxSetup ({cache: false});
     var LOGGER = new Logger('INIT');
-    var TEMPLATETOR = new Templatetor();
+    var Tpl = new Templatetor();
 
-    Rotator.setStepSpace($('section.stepspace'))
+    Cogwheel.setText('Setting up step rotator');
+    Rotator.setStepSpace($('section.stepspace'));
+    Rotator.setNextButton($('#nextController'))
+           .setPrevButton($('#prevController'))
+           .enableNextButton();
 
-    // Starting...
+    Cogwheel.setText('Loading trainer settings');
     Service.loadConfig(function () {
         var config = Service.getTrainerConfig();
-        if (config['TRAINER_NAME'])
-            Templatetor.extendConstView(config['vars']);
 
+        Cogwheel.setText('Setting up i18n');
         I18N.setAvailbleLanguages(config['LANGUAGES']);
-        var hash = window.location.hash;
-        if (hash.indexOf('lang=') != -1)
-            I18N.setLanguage(hash.substr(6,2));
+        var langParam = Service.getUrlParam('lang');
+        if (langParam != '')
+            I18N.setLanguage(langParam);
         else
             I18N.setLanguage(config['DEFAULT_LANG']);
 
+        Cogwheel.setText('Loading language file');
         I18N.loadLanguage(function () {
+            Cogwheel.setText('Reading language file');
             Templatetor.extendConstView(I18N.getConstants());
-            var LList = new LangList().setLangs(I18N.getLangNames()).render();
-            TEMPLATETOR.extendView({LANG_LIST: LList});
-            TEMPLATETOR.replace(true).setTemplate($('html')).render();
-            Rotator.init();
+            Tpl.replace(true).setTemplate($('html')).render();
+            Cogwheel.setText('Starting trainer');
+            Rotator.init(function () {
+                Scorer.start();
+                Cogwheel.hide();
+            });
         });
     });
 });

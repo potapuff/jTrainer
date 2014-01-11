@@ -1,10 +1,19 @@
-<div class="jumbotron">
-    <h1>Русский язык</h1>
-    <p>
-        <h5><strong>Тема:</strong> Склонение имён прилагательных</h5>
-        <h5><strong>Количество баллов:</strong> <span class="badge">14</span></h5>
-    </p>
-    <p>
-        {{YOU}} {{win}}
-    </p>
+<div class="row jumbotron">
+    <div class="col-md-5">
+        <img src="/img/trainer/trainer-logo.png" class="img-responsive center-block">
+    </div>
+    <div class="col-md-7">
+        <h1>{{TRAINER_NAME}}</h1>
+        <p>
+        <h5><strong>{{TOPIC}}:</strong> {{TRAINER_TOPIC}}</h5>
+        <h5><strong>{{MAX_SCORE}}:</strong> <span class="badge">{{TRAINER_SCORE}}</span></h5>
+        <br/>
+        <h5>{{CHOOSE_LANG}}:</h5>
+        <select class="form-control" onchange="window.location.href = '/?lang=' + $(this).val()">
+            <option>{{CHOOSE_SELECT}}</option>
+            {{{LANGS}}}
+        </select>
+        </p>
+
+    </div>
 </div>
