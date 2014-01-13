@@ -66,6 +66,10 @@ var I18N = null;
             this.getLangNames = function () {
                 return langs;
             }
+
+            this.getCurrentLang = function () {
+                return currentLangCode;
+            }
         }
 })(jQuery, Logger);
 

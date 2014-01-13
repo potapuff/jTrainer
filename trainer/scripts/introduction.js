@@ -7,7 +7,7 @@ var introduction = function () {
 
     this.mustache = function () {
         return {LANGS:    new LangList().setLangs(I18N.getLangNames())
-                                        .setPattern('<option value="%lang%">%name%</option>')
+                                        .setPattern('<option value="%lang%" %current%>%name%</option>')
                                         .render()
                 }
     }

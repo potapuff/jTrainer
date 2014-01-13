@@ -1,9 +1,9 @@
-jTrainer
+jTrainer Framework
 ========
 
 SumDU Distance Learning JavaScript Trainer
 
-This is a E-Trainer for Distance Learning Center of Sumy State University.
+This is a E-Trainer Framework for Distance Learning Center of Sumy State University.
 jTrainer is in a beta stage now and is under active development.
 
 jTrainer uses

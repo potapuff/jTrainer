@@ -1,6 +1,6 @@
 var Rotator = null;
 
-(function ($, Log, Tpl, _Scorer) {
+(function ($, Log, Tpl, _Scorer, _Cogwheel) {
     Rotator =
         function () {
             var LOGGER = new Log('Rotator');
@@ -148,11 +148,18 @@ var Rotator = null;
                             var instance = new stepJSObject();
                             if (typeof instance.preDispatch === "function")
                                 instance.preDispatch();
-                            var mustache = instance.mustache();
-                            if (typeof(mustache) === "object") {
-                                LOGGER.info('Mustache view presents.')
-                                view = mustache;
+                            if (typeof instance.async === "function") {
+                                instance.async(function () {
+                                    var mustache = instance.mustache();
+                                    if (typeof(mustache) === "object")
+                                        view = mustache;
+                                    callback(view, instance);
+                                });
+                                return;
                             }
+                            var mustache = instance.mustache();
+                            if (typeof(mustache) === "object")
+                                view = mustache;
                         }
                         callback(view, instance);
                     }).fail(function (jqxhr, settings, exception) {
@@ -179,6 +186,7 @@ var Rotator = null;
                     LOGGER.error('Step\'s settings haven\'t been loaded yet or is empty');
                     return;
                 }
+                _Cogwheel.setText('Loading step').show();
                 getStepData(step, function (html) {
                     TEMPLATETOR.setTemplate(html);
                     getStepScript(step, function (mustache, scriptInstance) {
@@ -213,6 +221,7 @@ var Rotator = null;
                     .done(function () {
                         current.addClass('current');
                         visibleStep = id;
+                        _Cogwheel.hide();
                         onChange();
                         if (typeof(callback) === "function")
                             callback();
@@ -292,6 +301,6 @@ var Rotator = null;
                 _Scorer.addScore(this.getStepScore());
             }
         }
-})(jQuery, Logger, Templatetor, Scorer);
+})(jQuery, Logger, Templatetor, Scorer, Cogwheel);
 
 Rotator = new Rotator();

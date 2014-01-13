@@ -1,13 +1,22 @@
 var VElements;
 var elementstest = function () {
-    this.preDispatch = function () {
+    var plot;
+
+    this.preDispatch = function () {}
+
+    this.async = function (callback) {
+        var w = new WolframAlpha();
+        w.setQuery('3x2+2x+5').plot(function(data) {
+            plot = '<img src="' + data + '">';
+            callback();
+        })
     }
 
     this.postDispatch = function () {
         VElements = new Validator();
         VElements.addValidator($('select[name="test-select"]'), 2)
                  .addValidator($('input[name="test-textinput"]'), 'test');
-        $('select[name="test-select"]').attr('onchange', 'VElements.validate()');
+        //$('select[name="test-select"]').attr('onchange', 'VElements.validate()');
         $('input[name="test-textinput"]').keyup(function() {VElements.validate()});
     }
 
@@ -18,7 +27,8 @@ var elementstest = function () {
                                  .addOption('{{ELEMENTSTEST_OPTION_THREE}}', 2)
                                  .render(),
                TEST_INPUT:   new TextInput('test-textinput')
-                                 .render()
+                                 .render(),
+               PLOT:         plot
         }
     }
 }
