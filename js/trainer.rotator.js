@@ -146,20 +146,23 @@ var Rotator = null;
                         LOGGER.debug(stepJSObject);
                         if (typeof (stepJSObject) === "function") {
                             var instance = new stepJSObject();
-                            if (typeof instance.preDispatch === "function")
-                                instance.preDispatch();
-                            if (typeof instance.async === "function") {
-                                instance.async(function () {
-                                    var mustache = instance.mustache();
-                                    if (typeof(mustache) === "object")
-                                        view = mustache;
-                                    callback(view, instance);
-                                });
-                                return;
+                            var mergeView = function () {
+                                var mustache = instance.mustache();
+                                if (typeof(mustache) === "object")
+                                    view = mustache;
                             }
-                            var mustache = instance.mustache();
-                            if (typeof(mustache) === "object")
-                                view = mustache;
+                            if (typeof instance.preDispatch === "function") {
+                                if (instance.preDispatch.length > 0) {
+                                    instance.preDispatch(function () {
+                                        mergeView();
+                                        callback(view, instance);
+                                    });
+                                    return;
+                                } else {
+                                    instance.preDispatch();
+                                }
+                            }
+                            mergeView();
                         }
                         callback(view, instance);
                     }).fail(function (jqxhr, settings, exception) {

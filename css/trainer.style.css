@@ -20,18 +20,29 @@
     margin: 0 !important;
 }
 
+.form-control {
+    -webkit-transition: all 0.7s ease;
+    -moz-transition: all 0.7s ease;
+    -o-transition: all 0.7s ease;
+    -ms-transition: all 0.7s ease;
+    transition: all 0.7s ease;
+}
+
 .has-success .form-control {
-    -webkit-box-shadow: inset 0 0.5px 0.5px rgba(0,0,0,0.075),0 0 3px #67b168;
-    box-shadow: inset 0 0.5px 0.5px rgba(0,0,0,0.075),0 0 3px #67b168;
+
+    background: rgb(219, 255, 219);
+    -webkit-box-shadow: inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 3px #67b168;
+    box-shadow: inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 3px #67b168;
 }
 
 .has-error .form-control {
-    -webkit-box-shadow: inset 0 0.5px 0.5px rgba(0,0,0,0.075),0 0 3px #ce8483;
-    box-shadow: inset 0 0.5px 0.5px rgba(0,0,0,0.075),0 0 3px #ce8483;
+    background: rgb(255, 234, 234);
+    -webkit-box-shadow: inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 3px #ce8483;
+    box-shadow: inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 3px #ce8483;
 }
 
 body {
-    background-image:url("../img/trainer/trainer-background.png");
+    background-image: url("../img/trainer/trainer-background.png");
 }
 
 .navbar-brand.trainer-brand {
