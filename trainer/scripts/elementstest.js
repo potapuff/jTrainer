@@ -13,9 +13,11 @@ var elementstest = function () {
     this.postDispatch = function () {
         VElements = new Validator();
         VElements.addValidator($('select[name="test-select"]'), 2)
-                 .addValidator($('input[name="test-textinput"]'), 'test');
-        $('select[name="test-select"]').attr('onchange', 'VElements.validate()');
-        $('input[name="test-textinput"]').keyup(function() {VElements.validate()});
+                 .addValidator($('input[name="test-textinput"]'), 'test')
+                 .setStictMode(true);
+        //$('select[name="test-select"]').attr('onchange', 'VElements.validate()');
+        //$('input[name="test-textinput"]').keyup(function() {VElements.validate()});
+        $('span.check').click(function() {VElements.validate()});
     }
 
     this.mustache = function () {

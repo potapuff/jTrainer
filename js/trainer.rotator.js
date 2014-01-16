@@ -291,18 +291,6 @@ var Rotator = null;
                     });
                 });
             }
-
-            this.notify = function (step, checkState) {
-                if (checkState === false) {
-                    if (visibleStep == lastLoadedStep)
-                        this.disableNextButton();
-                    return;
-                }
-                if (step > lastLoadedStep)
-                    loadStep(lastLoadedStep + 1);
-                this.enableNextButton();
-                _Scorer.addScore(this.getStepScore());
-            }
         }
 })(jQuery, Logger, Templatetor, Scorer, Cogwheel);
 
