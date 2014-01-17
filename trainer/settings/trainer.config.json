@@ -3,5 +3,6 @@
         "ru": "Russian",
         "en": "English"
     },
-    "DEFAULT_LANG": "ru"
+    "DEFAULT_LANG": "ru",
+    "STAGE": "development"
 }

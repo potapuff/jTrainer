@@ -1,8 +1,13 @@
 var Rotator = null;
 
 (function ($, Log, Tpl, _Scorer, _Cogwheel) {
-    Rotator =
-        function () {
+    /**
+     * Rotator is one of the main object of trainer that is responsible for the rotation
+     * of steps
+     * @instance
+     */
+    Rotator = new
+        (function () {
             var LOGGER = new Log('Rotator');
             var TEMPLATETOR = new Tpl();
 
@@ -13,16 +18,16 @@ var Rotator = null;
             var stepSpace = null;
 
             var lastLoadedStep = 0;
-            var visibleStep = 0;
-
-            var onLoad = function () {
-            };
-            var onChange = function () {
-            };
+            var visibleStep = 0
 
             var nextButton = null;
             var prevButton = null;
 
+            /**
+             * Ties up an wrapped DOM element of Prev Button
+             * @param o {jQuery} wrapped DOM element of Prev Button
+             * @returns {Rotator} current object (flow)
+             */
             this.setPrevButton = function (o) {
                 if (!(o instanceof $))
                     LOGGER.debug('Controller should be an instance of $');
@@ -31,6 +36,11 @@ var Rotator = null;
                 return this;
             }
 
+            /**
+             * Ties up an wrapped DOM element of Next Button
+             * @param o {jQuery} wrapped DOM element of Next Button
+             * @returns {Rotator} current object (flow)
+             */
             this.setNextButton = function (o) {
                 if (!(o instanceof $))
                     LOGGER.debug('Controller should be an instance of $');
@@ -39,6 +49,10 @@ var Rotator = null;
                 return this;
             }
 
+            /**
+             * Enables next button
+             * @returns {Rotator} current object (flow)
+             */
             this.enableNextButton = function () {
                 if (nextButton)
                     nextButton.removeClass('btn-default')
@@ -48,6 +62,10 @@ var Rotator = null;
                 return this;
             }
 
+            /**
+             * Disables next button
+             * @returns {Rotator} current object (flow)
+             */
             this.disableNextButton = function () {
                 if (nextButton)
                     nextButton.addClass('disabled')
@@ -57,49 +75,63 @@ var Rotator = null;
                 return this;
             }
 
+            /**
+             * Enables prev button
+             * @returns {Rotator} current object (flow)
+             */
             this.enablePrevButton = function () {
                 if (prevButton)
                     prevButton.removeClass('disabled')
-                              .attr('onclick', 'Rotator.prevStep()');
+                        .attr('onclick', 'Rotator.prevStep()');
                 return this;
             }
 
+            /**
+             * Disables prev button
+             * @returns {Rotator} current object (flow)
+             */
             this.disablePrevButton = function () {
                 if (prevButton)
                     prevButton.addClass('disabled')
-                              .attr('onclick', '');
+                        .attr('onclick', '');
                 return this;
             }
 
+            /**
+             * Sets patch to steps files
+             * @param p {String} step path
+             * @returns {Rotator} current object (flow)
+             */
             this.setStepsPath = function (p) {
                 STEPPATH = p;
                 return this;
             }
 
+            /**
+             * Sets patch to step's script files
+             * @param p {String} step's scripts path
+             * @returns {Rotator} current object (flow)
+             */
             this.setScriptsPath = function (p) {
                 SCRIPTSPATH = p;
                 return this;
             }
 
+            /**
+             * Sets patch to step's setting files
+             * @param p {String} step path
+             * @returns {Rotator} current object (flow)
+             */
             this.setSettingsPath = function (p) {
                 SETTINGSPATH = p;
                 return this;
             }
 
-            this.setOnLoadCallback = function (c) {
-                if (typeof(c) !== 'function')
-                    LOGGER.error('OnLoad callback should be a function');
-                onLoad = c;
-                return this;
-            }
-
-            this.setOnChangeCallback = function (c) {
-                if (typeof(c) !== 'function')
-                    LOGGER.error('OnChange callback should be a function');
-                onChange = c;
-                return this;
-            }
-
+            /**
+             * Sets an object where steps will be loaded
+             * @param p {jQuery} wrapped DOM element
+             * @returns {Rotator} current object (flow)
+             */
             this.setStepSpace = function (ss) {
                 if (!(ss instanceof $))
                     LOGGER.error('Step\'s space should be an instance if jQuery');
@@ -110,6 +142,11 @@ var Rotator = null;
                 return this;
             }
 
+            /**
+             * Pushes data into step's space
+             * @param data {String} data
+             * @returns {boolean} true if stepSpace is defined and exists, otherwise - false
+             */
             var toStepSpace = function (data) {
                 if (!stepSpace || stepSpace.length == 0) {
                     LOGGER.error('Step space is undefined');
@@ -120,6 +157,10 @@ var Rotator = null;
                 }
             }
 
+            /**
+             * Loads step's setting file
+             * @param callback {function} callback to call after loading
+             */
             var loadStepsSettings = function (callback) {
                 $.get(SETTINGSPATH)
                     .done(function (data, textStatus) {
@@ -132,6 +173,24 @@ var Rotator = null;
                         LOGGER.catching(exception);
                     });
             }
+
+            /**
+             * Loads step's script file and executing it.
+             *
+             * Every step's script should contain function expressing named the same with step.
+             * Firstly, stepClass.preDispatch() method runs. It can be with/without callback.
+             * This method goes first and usually is used to perform async things before step will be displayed;
+             *
+             * Than goes stepClass.mustache() method. This method should return an view object for
+             * replacement.
+             * This method usually is used to bind data from stepClass and application view
+             *
+             * The latest is stepClass.postDispatch(). This method goes last and executes after rendering
+             * step is performed. It's great for binding events. It executes in {@link loadStep} method.
+             *
+             * @param step  {String} name of step
+             * @param callback {function} callback to call after loading script file
+             */
             var getStepScript = function (step, callback) {
                 var view = {};
                 if (!settings[step]['hasScript']) {
@@ -170,6 +229,11 @@ var Rotator = null;
                     });
             }
 
+            /**
+             * Loads html template of a step
+             * @param step {String} step's name
+             * @param callback {function} callback to call after loading html file
+             */
             var getStepData = function (step, callback) {
                 $.get(STEPPATH + settings[step]['filename'] + '.html')
                     .done(function (data, textStatus) {
@@ -183,6 +247,11 @@ var Rotator = null;
                     });
             }
 
+            /**
+             * This method is an union of several methods, that performs the whole cycle of loading step
+             * @param step {String} name of step
+             * @param callback {function} callback to call after loading step
+             */
             var loadStep = function (step, callback) {
                 // get step's html -> load step's script -> execute sctipt -> append new tpl view (if is) -> compile
                 if (!settings || settings.length === 0) {
@@ -196,7 +265,7 @@ var Rotator = null;
                         var data = TEMPLATETOR.extendView(mustache).render();
                         lastLoadedStep = step;
                         toStepSpace(data);
-                        console.log(scriptInstance)
+                        LOGGER.debug(scriptInstance)
                         if (scriptInstance && typeof scriptInstance.postDispatch === "function")
                             scriptInstance.postDispatch();
                         if (typeof(callback) === "function")
@@ -205,6 +274,11 @@ var Rotator = null;
                 });
             }
 
+            /**
+             * Methods allows you to navigate through already loaded steps.
+             * @param id {Number} index of a step
+             * @param callback {function} callback to call after changing step
+             */
             var fadeStepIn = function (id, callback) {
                 if (id >= settings.length) {
                     LOGGER.error('Step <' + id + '> is not loaded');
@@ -231,10 +305,19 @@ var Rotator = null;
                     });
             }
 
+            /**
+             * Allows to switch step by id, it it's loaded
+             * @param step {Number} step's id
+             */
             this.switchStep = function (step) {
                 fadeStepIn(step);
             }
 
+            /**
+             * Gets a max score for this step
+             * @param step {Number} step's index
+             * @returns {Numeric} amount of points for this step
+             */
             this.getStepScore = function (step) {
                 if ($.isNumeric(step) && step < settings.length)
                     return settings[step]['score'];
@@ -242,6 +325,11 @@ var Rotator = null;
                     return settings[visibleStep]['score'];
             }
 
+            /**
+             * Performs transition to the next level
+             * @param callback {function} callback to call after changing step
+             * @returns {boolean} true, if the transition was successful, otherwise - false
+             */
             this.nextStep = function (callback) {
                 var next = visibleStep + 1;
                 if (next >= settings.length) {
@@ -262,8 +350,14 @@ var Rotator = null;
                 }
                 next >= lastLoadedStep ? this.disableNextButton() : this.enableNextButton();
                 this.enablePrevButton();
+                return true;
             }
 
+            /**
+             * Performs transition to the prev level
+             * @param callback {function} callback to call after changing step
+             * @returns {boolean} true, if the transition was successful, otherwise - false
+             */
             this.prevStep = function (callback) {
                 var prev = visibleStep - 1;
                 if (prev >= 0 && prev < lastLoadedStep) {
@@ -276,14 +370,26 @@ var Rotator = null;
                     this.disablePrevButton();
             }
 
+            /**
+             * Gets current step's index
+             * @returns {number} id of a step
+             */
             this.currentStepId = function () {
                 return visibleStep;
             }
 
+            /**
+             * Gets last loaded step's index
+             * @returns {number} id of a last step
+             */
             this.lastLoadedStepId = function () {
                 return lastLoadedStep;
             }
 
+            /**
+             * Factory method for preloading first step
+             * @param callback {function} callback to call after loading step
+             */
             this.init = function (callback) {
                 loadStepsSettings(function () {
                     loadStep(0, function () {
@@ -291,7 +397,5 @@ var Rotator = null;
                     });
                 });
             }
-        }
+        });
 })(jQuery, Logger, Templatetor, Scorer, Cogwheel);
-
-Rotator = new Rotator();

@@ -1,16 +1,33 @@
 var Templatetor = null;
 
-(function($, M, Log) {
+(function ($, _Mustache, _Logger) {
+    /**
+     * Templatetor is a Mustache wrapper with some addition functionality
+     * like replacing mustache placeholders in already rendered DOM elements
+     * and checking for them in the string. Also it has a container of static
+     * view values, that makes language templating easier.
+     * @constructor
+     */
     Templatetor =
         function () {
-            var LOGGER = new Log('Rotator');
+            var LOGGER = new _Logger('Rotator');
 
-            //var constView = {};
             var view = {};
             var template = null;
 
             var replaceMode = false;
 
+            /**
+             * Replace text in specified elements. Note that only text content will be
+             * modified, leaving all tags and attributes untouched. The new text can be
+             * either text or HTML.
+             * @author "Cowboy" Ben Alman http://benalman.com/projects/jquery-replacetext-plugin/
+             * @param search (RegExp|String) A RegExp object or substring to be replaced.
+             * @param replace (String|Function) The String that replaces the substring received
+             *                 from the search argument, or a function to be invoked to create the new substring.
+             * @param text_only (Boolean) If true, any HTML will be rendered as text. Defaults to false.
+             * @returns {jQuery} The initial jQuery collection of elements.
+             */
             $.fn.replaceText = function (search, replace, text_only) {
                 return this.each(function () {
                     var node = this.firstChild,
@@ -37,6 +54,12 @@ var Templatetor = null;
                 });
             };
 
+            /**
+             * Adds values to templatetor's view.
+             * View is a assoc array for replacement using Mustache
+             * @param o {Object} view to add
+             * @returns {Templatetor} current object (flow)
+             */
             this.extendView = function (o) {
                 if (typeof(o) !== "object")
                     LOGGER.error('Mustache view should be extended with an object');
@@ -45,28 +68,35 @@ var Templatetor = null;
                 return this;
             }
 
+            /**
+             * Sets a template where Mustache's placeholders should be processed
+             * @param o {jQuery|String} template text/object
+             * @returns {Templatetor} current object (flow)
+             */
             this.setTemplate = function (o) {
                 LOGGER.debug(typeof(o));
                 template = o;
                 return this;
             }
 
-            this.appendTemplate = function (o) {
-                if (template instanceof $)
-                    template.append(o);
-                else if (typeof(o) === "string")
-                    template += o;
-                else
-                    LOGGER.error('Appending template error');
-                return this;
-            }
-
+            /**
+             * Setter of replacement mode.
+             * If replacement mode is on
+             * @param b {Boolean} replacement mode switch
+             * @returns {Templatetor}
+             */
             this.replace = function (b) {
                 if (typeof b === "boolean")
                     replaceMode = b;
                 return this;
             }
 
+            /**
+             * This method performs replacement of Mustache's placeholders with
+             * data from view. If replacement mode enabled, method uses {@link $.fn.replaceText}
+             * to perform replacements.
+             * @returns {String|NULL} null if replacement mode is one, otherwise rendered string
+             */
             this.render = function () {
                 if (!template) {
                     LOGGER.error('template is undefined');
@@ -79,7 +109,7 @@ var Templatetor = null;
                 LOGGER.debug(view);
 
                 if ((template instanceof $) && replaceMode === true) {
-                    template.find('*').replaceText(/{{([^}]+)}}/, function(fullMatch, key) {
+                    template.find('*').replaceText(/{{([^}]+)}}/, function (fullMatch, key) {
                         return ((typeof view[key] !== "undefined") ? view[key] : key);
                     }, false);
                 } else {
@@ -93,12 +123,16 @@ var Templatetor = null;
                         return;
                     }
                     LOGGER.debug(view);
-                    var rendered = M.render(tpl, view);
+                    var rendered = _Mustache.render(tpl, view);
                 }
                 this.clean();
                 return rendered;
             }
 
+            /**
+             * Cleans templatetor's view, template data and disabling replacement mode
+             * @returns {Templatetor}
+             */
             this.clean = function () {
                 view = {};
                 template = null;
@@ -109,20 +143,32 @@ var Templatetor = null;
         }
 })(jQuery, Mustache, Logger);
 
+/**
+ * This is a static view that takes part in all templatetor's renderings
+ */
 Templatetor.constructor.prototype.constView = {};
 
+/**
+ * Extends a static view object
+ * @param o {Object} an assoc array with replacements
+ */
 Templatetor.constructor.prototype.extendConstView = function (o) {
     if (typeof(o) === "object")
         $.extend(Templatetor.constructor.prototype.constView, o);
-    console.log(Templatetor.constructor.prototype.constView);
 }
 
-Templatetor.constructor.prototype.teplatable = function (text) {
+/**
+ * This methods checks if string contains Mustache's placeholders and can be
+ * processed with {@link Templatetor}
+ * @param t {String} text to check
+ * @returns {boolean} true, if text contains Mustache's placeholders, otherwise false
+ */
+Templatetor.constructor.prototype.teplatable = function (t) {
     var txt;
-    if (text instanceof $)
-        txt = text.html();
-    else if (typeof text === "string") {
-        txt = text;
+    if (t instanceof $)
+        txt = t.html();
+    else if (typeof t === "string") {
+        txt = t;
     } else {
         return false;
     }

@@ -4,14 +4,14 @@ var results = function () {
     }
 
     this.postDispatch = function () {
-
     }
 
     this.mustache = function () {
-        return {START_TIME: Scorer.getFormattedStartTime(),
-                END_TIME: Scorer.getFormattedEndTime(),
-                TIME_DIFF: Scorer.getTimeDifference(),
-                SCORE: Scorer.getScore()
+        return {
+            START_TIME: Scorer.getFormattedStartTime(),
+            END_TIME: Scorer.getFormattedEndTime(),
+            TIME_DIFF: Scorer.getTimeDifference(),
+            SCORE: Scorer.getScore()
         }
     }
 }
