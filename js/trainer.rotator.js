@@ -240,7 +240,6 @@ var Rotator = null;
                         LOGGER.info('Step loaded...');
                         data = '<div data-step="' + step + '" class="step">' + data + '</div>';
                         LOGGER.debug(data);
-                        onLoad();
                         callback(data);
                     }).fail(function (jqxhr, settings, exception) {
                         LOGGER.catching(exception);
@@ -299,7 +298,6 @@ var Rotator = null;
                         current.addClass('current');
                         visibleStep = id;
                         _Cogwheel.hide();
-                        onChange();
                         if (typeof(callback) === "function")
                             callback();
                     });
