@@ -8,6 +8,7 @@ var Rotator = null;
      */
     Rotator = new
         (function () {
+            var self = this;
             var LOGGER = new Log('Rotator');
             var TEMPLATETOR = new Tpl();
 
@@ -22,6 +23,16 @@ var Rotator = null;
 
             var nextButton = null;
             var prevButton = null;
+
+            //TODO: HTML5 history???
+            $(window).on('hashchange', function() {
+                var hash = window.location.hash;
+                if (hash.indexOf('step') != -1) {
+                    var step = parseInt(hash.replace('#step',''));
+                    if (step != visibleStep && step <= lastLoadedStep)
+                        self.switchStep(step);
+                }
+            });
 
             /**
              * Ties up an wrapped DOM element of Prev Button
@@ -298,6 +309,7 @@ var Rotator = null;
                         current.addClass('current');
                         visibleStep = id;
                         _Cogwheel.hide();
+                        window.location.hash = '#step' + id;
                         if (typeof(callback) === "function")
                             callback();
                     });
@@ -308,7 +320,17 @@ var Rotator = null;
              * @param step {Number} step's id
              */
             this.switchStep = function (step) {
-                fadeStepIn(step);
+                fadeStepIn(step, function () {
+                    if (visibleStep < lastLoadedStep)
+                        self.enableNextButton();
+                    else
+                        self.disableNextButton();
+
+                    if (visibleStep > 0)
+                        self.enablePrevButton();
+                    else
+                        self.disablePrevButton();
+                });
             }
 
             /**

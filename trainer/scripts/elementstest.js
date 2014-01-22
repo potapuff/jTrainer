@@ -1,6 +1,6 @@
 var VElements;
 var elementstest = function () {
-    var plot;
+    var plot = null;
 
     this.preDispatch = function (callback) {
         var w = new WolframAlpha();
@@ -14,7 +14,7 @@ var elementstest = function () {
         VElements = new Validator();
         VElements.addValidator($('select[name="test-select"]'), 2)
             .addValidator($('input[name="test-textinput"]'), 'test')
-            .setStictMode(true);
+            .setStrictMode(true);
         $('span.check').click(function () {
             VElements.validate()
         });

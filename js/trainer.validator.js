@@ -29,7 +29,7 @@ var Validator = null;
              * @param b {Boolean} strict mode switch
              * @returns {Validator} current object (flow)
              */
-            this.setStictMode = function (b) {
+            this.setStrictMode = function (b) {
                 if (typeof b === "boolean")
                     isStrict = b;
                 return this;

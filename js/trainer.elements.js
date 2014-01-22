@@ -1,5 +1,75 @@
 var Select = null;
+var CheckBox = null;
+var TextInput = null;
+var WolframAlpha = null;
+var LateX = null;
+
 (function($, _Logger, _Templatetor) {
+    CheckBox =
+        function (n) {
+            var name = n;
+            var attributes = '';
+            var label, value;
+
+            /**
+             * Sets checkbox's name
+             * @param nm {String} checkbox name
+             * @returns {CheckBox} current object {flow)
+             */
+            this.setName = function (nm) {
+                if (typeof nm === "string")
+                    name = nm;
+                return this;
+            }
+
+            /**
+             * Adds attribute to checkbox
+             * @param n {String} attribute's name
+             * @param v {String|Number} attribute's value
+             * @returns {CheckBox} current object {flow)
+             */
+            this.addAttribute = function (n, v) {
+                if (typeof n === "string")
+                    attributes += ' ' +  n + '="' + v.toString() + '"';
+                return this;
+            }
+
+            /**
+             * Sets a label to CheckBox
+             * @param l {String} label
+             * @returns {CheckBox} current object {flow)
+             */
+            this.setLabel = function (l) {
+                if (typeof l == "string")
+                    label = l;
+                return this;
+            }
+
+            /**
+             * Sets a value of CheckBox
+             * @param l {String|Number} CheckBox's value
+             * @returns {CheckBox} current object {flow)
+             */
+            this.setValue = function (v) {
+                if (typeof v == "string" || typeof v == "number")
+                    value = v;
+                return this;
+            }
+
+            /**
+             * Renders a checkbox
+             * @returns {String} rendered checkbox
+             */
+            this.render = function () {
+                if (!name || !value)
+                    throw new Error('Please check element\'s name and value.');
+                var result = '<div class="form-group" for="' + name + '"><div class="checkbox">';
+                result += '<label><input type="checkbox" ' + (attributes ? attributes : '') + ' name="' + name + '" value="' + value + '">' + (label ? label : '') + '</label></div>\n';
+                if (_Templatetor.teplatable(result))
+                    result = TEMPLATETOR.setTemplate(result).render();
+                return result;
+            }
+    }
     /**
      * This class in a wrapper to html select tag.
      * @param n {String} select's name
@@ -7,7 +77,6 @@ var Select = null;
      */
     Select =
         function (n) {
-            var LOGGER = new _Logger();
             var TEMPLATETOR = new _Templatetor();
 
             var name = n;
@@ -110,10 +179,12 @@ var Select = null;
 
             /**
              * Renders a text select
-             * @returns {string} rendered select
+             * @returns {String} rendered select
              */
             this.render = function () {
-                var result = '<div class="form-group" for="' + name + '"><select' + attributes + ' name="' + name + '" class="' + classes.join(' ') + '"' + (style != '' ? (' style="' + style + '"') : '') +'><option value="-1" disabled="disabled">{{CHOOSE_SELECT}}</option>';
+                if (!name || Object.keys(options).length == 0)
+                    throw new Error('Please check element\'s name, values and default value');
+                var result = '<div class="form-group" for="' + name + '"><select' + (attributes ? attributes : '') + ' name="' + name + '" class="' + classes.join(' ') + '"' + (style != '' ? (' style="' + style + '"') : '') +'><option value="-1" disabled="disabled">{{CHOOSE_SELECT}}</option>';
                 for (var key in options){
                     if (options.hasOwnProperty(key)) {
                         result += '<option value="' + options[key] + '"' + (defaultVal == options[key] ? ' selected="selected"' : '') + '>' + key + '</option>\n';
@@ -125,10 +196,7 @@ var Select = null;
                 return result;
             }
         }
-})(jQuery, Logger, Templatetor);
 
-var TextInput = null;
-(function($, _Logger, _Templatetor) {
     /**
      * This class in a wrapper to html text input.
      * @param n {String} input's name
@@ -136,7 +204,6 @@ var TextInput = null;
      */
     TextInput =
         function (n) {
-            var LOGGER = new _Logger();
             var TEMPLATOR = new _Templatetor();
 
             var name = n;
@@ -226,20 +293,18 @@ var TextInput = null;
 
             /**
              * Renders a text input
-             * @returns {string} rendered text input
+             * @returns {String} rendered text input
              */
             this.render = function () {
-                var result = '<div class="form-group" for="' + name + '"><input' + attributes + ' type="text" name="' + name + '" class="' + classes.join(' ') + '"' + (style != '' ? (' style="' + style + '"') : '') +' placeholder="' + placeholder + '"></div>';
+                if (!name)
+                    throw new Error('Please check element\'s name. It\'s empty.');
+                var result = '<div class="form-group" for="' + name + '"><input' + (attributes ? attributes : '') + ' type="text" name="' + name + '" class="' + classes.join(' ') + '"' + (style != '' ? (' style="' + style + '"') : '') +' placeholder="' + placeholder + '"></div>';
                 if (_Templatetor.teplatable(result))
                     result = TEMPLATOR.setTemplate(result).render();
                 return result;
             }
         }
-})(jQuery, Logger, Templatetor);
 
-
-var WolframAlpha = null;
-(function($, _Logger) {
     /**
      * This class is a wrapper to WolframAlpha API.
      * @constructor
@@ -303,32 +368,34 @@ var WolframAlpha = null;
             }
 
         }
-})(jQuery, Logger);
 
-/**
- * Class for rendering LateX formulas
- * @constructor
- */
-var LateX =
-    function () {
-        var formula;
+    /**
+     * Class for rendering LateX formulas
+     * @constructor
+     */
+    var LateX =
+        function () {
+            var formula;
 
-        /**
-         * Sets a LateX text to render
-         * @param f {String} LateX formtted string
-         * @returns {LateX} current object (flow)
-         */
-        this.setFormula = function (f) {
-            if (typeof f === "string")
-                formula = f;
-            return this;
-        }
+            /**
+             * Sets a LateX text to render
+             * @param f {String} LateX formtted string
+             * @returns {LateX} current object (flow)
+             */
+            this.setFormula = function (f) {
+                if (typeof f === "string")
+                    formula = f;
+                return this;
+            }
 
-        /**
-         * Renders LateX formula
-         * @returns {img} rendered formula as an img tag
-         */
-        this.render = function () {
-            return '<img class="latex" src="http://latex.codecogs.com/svg.latex?' + formula + '" border="0"/>';
-        }
-    };
+            /**
+             * Renders LateX formula
+             * @returns {img} rendered formula as an img tag
+             */
+            this.render = function () {
+                if (!formula)
+                    throw new Error('Set formula first!');
+                return '<img class="latex" src="http://latex.codecogs.com/svg.latex?' + formula + '" border="0"/>';
+            }
+        };
+})(jQuery, Logger, Templatetor);

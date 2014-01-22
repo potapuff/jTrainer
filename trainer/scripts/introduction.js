@@ -6,7 +6,7 @@ var introduction = function () {
     }
 
     this.mustache = function () {
-        var langList = new Select().addAttribute('onchange', 'window.location.href = \'/?lang=\' + $(this).val()');
+        var langList = new Select('languageSelect').addAttribute('onchange', 'window.location.href = \'/?lang=\' + $(this).val()');
         var langs = I18N.getLangNames();
         for (var code in langs) {
             if (langs.hasOwnProperty(code)) {

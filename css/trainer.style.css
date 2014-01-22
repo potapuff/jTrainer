@@ -28,14 +28,18 @@
     transition: all 0.7s ease;
 }
 
-.has-success .form-control {
+.has-success .form-control,
+.has-success .checkbox,
+.has-success .radio {
 
     background: rgb(219, 255, 219);
     -webkit-box-shadow: inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 3px #67b168;
     box-shadow: inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 3px #67b168;
 }
 
-.has-error .form-control {
+.has-error .form-control,
+.has-error .checkbox,
+.has-error .radio {
     background: rgb(255, 234, 234);
     -webkit-box-shadow: inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 3px #ce8483;
     box-shadow: inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 3px #ce8483;
