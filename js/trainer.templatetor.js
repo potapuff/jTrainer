@@ -10,7 +10,7 @@ var Templatetor = null;
      */
     Templatetor =
         function () {
-            var LOGGER = new _Logger('Rotator');
+            var LOGGER = new _Logger();
 
             var view = {};
             var template = null;
@@ -62,11 +62,10 @@ var Templatetor = null;
              */
             this.extendView = function (o) {
                 if (typeof(o) !== "object")
-                    LOGGER.error('Mustache view should be extended with an object');
-                else
-                    $.extend(view, o);
+                    throw new IllegalArgumentException('Mustache view should be extended with an object');
+                $.extend(view, o);
                 return this;
-            }
+            };
 
             /**
              * Sets a template where Mustache's placeholders should be processed
@@ -74,10 +73,11 @@ var Templatetor = null;
              * @returns {Templatetor} current object (flow)
              */
             this.setTemplate = function (o) {
-                LOGGER.debug(typeof(o));
+                if (typeof o !== "string" && !(o instanceof jQuery))
+                    throw new IllegalArgumentException('Template should be a string or jQuery object');
                 template = o;
                 return this;
-            }
+            };
 
             /**
              * Setter of replacement mode.
@@ -86,22 +86,22 @@ var Templatetor = null;
              * @returns {Templatetor}
              */
             this.replace = function (b) {
-                if (typeof b === "boolean")
-                    replaceMode = b;
+                if (typeof b !== "boolean")
+                    throw new IllegalArgumentException('Argument should be boolean');
+                replaceMode = b;
                 return this;
-            }
+            };
 
             /**
              * This method performs replacement of Mustache's placeholders with
              * data from view. If replacement mode enabled, method uses {@link $.fn.replaceText}
              * to perform replacements.
-             * @returns {String|NULL} null if replacement mode is one, otherwise rendered string
+             * @returns {String} null if replacement mode is one, otherwise rendered string
              */
             this.render = function () {
-                if (!template) {
-                    LOGGER.error('template is undefined');
-                    return;
-                }
+                if (!template)
+                    throw new IllegalStateException('Template is undefined');
+
                 LOGGER.debug("TREMOLATOTAORS VIEW");
                 LOGGER.debug(view);
 
@@ -118,16 +118,15 @@ var Templatetor = null;
                         tpl = template.html();
                     else if (typeof(template) === "string")
                         tpl = template;
-                    else {
-                        LOGGER.error('Unknown type of template');
-                        return;
-                    }
+                    else
+                        throw new IllegalStateException('Unknown type of template');
+
                     LOGGER.debug(view);
                     var rendered = _Mustache.render(tpl, view);
                 }
                 this.clean();
                 return rendered;
-            }
+            };
 
             /**
              * Cleans templatetor's view, template data and disabling replacement mode
@@ -136,10 +135,9 @@ var Templatetor = null;
             this.clean = function () {
                 view = {};
                 template = null;
-                insertObj = null;
                 replaceMode = false;
                 return this;
-            }
+            };
         }
 })(jQuery, Mustache, Logger);
 
@@ -155,7 +153,7 @@ Templatetor.constructor.prototype.constView = {};
 Templatetor.constructor.prototype.extendConstView = function (o) {
     if (typeof(o) === "object")
         $.extend(Templatetor.constructor.prototype.constView, o);
-}
+};
 
 /**
  * This methods checks if string contains Mustache's placeholders and can be
@@ -173,4 +171,4 @@ Templatetor.constructor.prototype.teplatable = function (t) {
         return false;
     }
     return txt.indexOf("{{") != -1;
-}
+};

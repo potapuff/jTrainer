@@ -9,30 +9,20 @@ var Rotator = null;
     Rotator = new
         (function () {
             var self = this;
-            var LOGGER = new Log('Rotator');
+            var LOGGER = new Log();
             var TEMPLATETOR = new Tpl();
 
-            var STEPPATH = 'trainer/';
-            var SCRIPTSPATH = STEPPATH + 'scripts/';
-            var SETTINGSPATH = STEPPATH + 'settings/trainer.steps.json';
+            var STEP_PATH = 'trainer/';
+            var SCRIPTS_PATH = STEP_PATH + 'scripts/';
+            var SETTINGS_PATH = STEP_PATH + 'settings/trainer.steps.json';
             var settings = null;
             var stepSpace = null;
 
             var lastLoadedStep = 0;
-            var visibleStep = 0
+            var visibleStep = 0;
 
             var nextButton = null;
             var prevButton = null;
-
-            //TODO: HTML5 history???
-            $(window).on('hashchange', function() {
-                var hash = window.location.hash;
-                if (hash.indexOf('step') != -1) {
-                    var step = parseInt(hash.replace('#step',''));
-                    if (step != visibleStep && step <= lastLoadedStep)
-                        self.switchStep(step);
-                }
-            });
 
             /**
              * Ties up an wrapped DOM element of Prev Button
@@ -41,11 +31,10 @@ var Rotator = null;
              */
             this.setPrevButton = function (o) {
                 if (!(o instanceof $))
-                    LOGGER.debug('Controller should be an instance of $');
-                else
-                    prevButton = o;
+                    throw new IllegalArgumentException('Controller should be an instance of $');
+                prevButton = o;
                 return this;
-            }
+            };
 
             /**
              * Ties up an wrapped DOM element of Next Button
@@ -54,11 +43,10 @@ var Rotator = null;
              */
             this.setNextButton = function (o) {
                 if (!(o instanceof $))
-                    LOGGER.debug('Controller should be an instance of $');
-                else
-                    nextButton = o;
+                    throw new IllegalArgumentException('Controller should be an instance of $');
+                nextButton = o;
                 return this;
-            }
+            };
 
             /**
              * Enables next button
@@ -71,7 +59,7 @@ var Rotator = null;
                         .removeClass('disabled')
                         .attr('onclick', 'Rotator.nextStep()');
                 return this;
-            }
+            };
 
             /**
              * Disables next button
@@ -84,7 +72,7 @@ var Rotator = null;
                         .addClass('btn-default')
                         .attr('onclick', '');
                 return this;
-            }
+            };
 
             /**
              * Enables prev button
@@ -95,7 +83,7 @@ var Rotator = null;
                     prevButton.removeClass('disabled')
                         .attr('onclick', 'Rotator.prevStep()');
                 return this;
-            }
+            };
 
             /**
              * Disables prev button
@@ -106,7 +94,7 @@ var Rotator = null;
                     prevButton.addClass('disabled')
                         .attr('onclick', '');
                 return this;
-            }
+            };
 
             /**
              * Sets patch to steps files
@@ -114,9 +102,9 @@ var Rotator = null;
              * @returns {Rotator} current object (flow)
              */
             this.setStepsPath = function (p) {
-                STEPPATH = p;
+                STEP_PATH = p;
                 return this;
-            }
+            };
 
             /**
              * Sets patch to step's script files
@@ -124,9 +112,9 @@ var Rotator = null;
              * @returns {Rotator} current object (flow)
              */
             this.setScriptsPath = function (p) {
-                SCRIPTSPATH = p;
+                SCRIPTS_PATH = p;
                 return this;
-            }
+            };
 
             /**
              * Sets patch to step's setting files
@@ -134,9 +122,9 @@ var Rotator = null;
              * @returns {Rotator} current object (flow)
              */
             this.setSettingsPath = function (p) {
-                SETTINGSPATH = p;
+                SETTINGS_PATH = p;
                 return this;
-            }
+            };
 
             /**
              * Sets an object where steps will be loaded
@@ -145,45 +133,39 @@ var Rotator = null;
              */
             this.setStepSpace = function (ss) {
                 if (!(ss instanceof $))
-                    LOGGER.error('Step\'s space should be an instance if jQuery');
+                    throw new IllegalArgumentException('Step\'s space should be an instance if jQuery');
                 else if (ss.length == 0)
-                    LOGGER.error('There is no such element in DOM');
-                else
-                    stepSpace = ss;
+                    throw new IllegalStateException('There is no such element in DOM');
+                stepSpace = ss;
                 return this;
-            }
+            };
 
             /**
              * Pushes data into step's space
              * @param data {String} data
-             * @returns {boolean} true if stepSpace is defined and exists, otherwise - false
              */
             var toStepSpace = function (data) {
-                if (!stepSpace || stepSpace.length == 0) {
-                    LOGGER.error('Step space is undefined');
-                    return false;
-                } else {
-                    stepSpace.append(data);
-                    return true;
-                }
-            }
+                if (!stepSpace || stepSpace.length == 0)
+                    throw new IllegalStateException('Step space is undefined');
+                stepSpace.append(data);
+            };
 
             /**
              * Loads step's setting file
              * @param callback {function} callback to call after loading
              */
             var loadStepsSettings = function (callback) {
-                $.get(SETTINGSPATH)
-                    .done(function (data, textStatus) {
+                $.get(SETTINGS_PATH)
+                    .done(function (data) {
                         LOGGER.info('Settings data loaded...');
                         settings = data;
                         LOGGER.debug(settings);
                         if (typeof(callback) === "function")
                             callback();
                     }).fail(function (jqxhr, settings, exception) {
-                        LOGGER.catching(exception);
+                        throw new IllegalAsyncStateException(exception);
                     });
-            }
+            };
 
             /**
              * Loads step's script file and executing it.
@@ -209,8 +191,8 @@ var Rotator = null;
                     callback(view);
                     return;
                 }
-                $.getScript(SCRIPTSPATH + settings[step]['filename'] + '.js')
-                    .done(function (script, textStatus) {
+                $.getScript(SCRIPTS_PATH + settings[step]['filename'] + '.js')
+                    .done(function (script) {
                         LOGGER.info('Step\'s script loaded...');
                         var stepJSObject = window[settings[step]['filename']];
                         LOGGER.debug(stepJSObject);
@@ -220,7 +202,7 @@ var Rotator = null;
                                 var mustache = instance.mustache();
                                 if (typeof(mustache) === "object")
                                     view = mustache;
-                            }
+                            };
                             if (typeof instance.preDispatch === "function") {
                                 if (instance.preDispatch.length > 0) {
                                     instance.preDispatch(function () {
@@ -236,9 +218,9 @@ var Rotator = null;
                         }
                         callback(view, instance);
                     }).fail(function (jqxhr, settings, exception) {
-                        LOGGER.catching(exception);
+                        throw new IllegalAsyncStateException(exception);
                     });
-            }
+            };
 
             /**
              * Loads html template of a step
@@ -246,28 +228,25 @@ var Rotator = null;
              * @param callback {function} callback to call after loading html file
              */
             var getStepData = function (step, callback) {
-                $.get(STEPPATH + settings[step]['filename'] + '.html')
-                    .done(function (data, textStatus) {
+                $.get(STEP_PATH + settings[step]['filename'] + '.html')
+                    .done(function (data) {
                         LOGGER.info('Step loaded...');
                         data = '<div data-step="' + step + '" class="step">' + data + '</div>';
                         LOGGER.debug(data);
                         callback(data);
                     }).fail(function (jqxhr, settings, exception) {
-                        LOGGER.catching(exception);
+                        throw new IllegalAsyncStateException(exception);
                     });
-            }
+            };
 
             /**
              * This method is an union of several methods, that performs the whole cycle of loading step
-             * @param step {String} name of step
+             * @param step {Number} name of step
              * @param callback {function} callback to call after loading step
              */
             var loadStep = function (step, callback) {
-                // get step's html -> load step's script -> execute sctipt -> append new tpl view (if is) -> compile
-                if (!settings || settings.length === 0) {
-                    LOGGER.error('Step\'s settings haven\'t been loaded yet or is empty');
-                    return;
-                }
+                if (!settings || settings.length === 0)
+                    throw new IllegalStateException('Step\'s settings haven\'t been loaded yet or is empty');
                 _Cogwheel.setText('Loading step').show();
                 getStepData(step, function (html) {
                     TEMPLATETOR.setTemplate(html);
@@ -275,14 +254,14 @@ var Rotator = null;
                         var data = TEMPLATETOR.extendView(mustache).render();
                         lastLoadedStep = step;
                         toStepSpace(data);
-                        LOGGER.debug(scriptInstance)
+                        LOGGER.debug(scriptInstance);
                         if (scriptInstance && typeof scriptInstance.postDispatch === "function")
                             scriptInstance.postDispatch();
                         if (typeof(callback) === "function")
                             callback(data, scriptInstance);
                     });
                 });
-            }
+            };
 
             /**
              * Methods allows you to navigate through already loaded steps.
@@ -290,10 +269,8 @@ var Rotator = null;
              * @param callback {function} callback to call after changing step
              */
             var fadeStepIn = function (id, callback) {
-                if (id >= settings.length) {
-                    LOGGER.error('Step <' + id + '> is not loaded');
-                    return;
-                }
+                if (id >= settings.length)
+                    throw new IllegalStateException('Step <' + id + '> is not loaded');
                 var old = stepSpace.find('div[data-step="' + visibleStep + '"]');
                 if (old.is(':visible')) {
                     old.slideToggle().promise()
@@ -309,11 +286,10 @@ var Rotator = null;
                         current.addClass('current');
                         visibleStep = id;
                         _Cogwheel.hide();
-                        window.location.hash = '#step' + id;
                         if (typeof(callback) === "function")
                             callback();
                     });
-            }
+            };
 
             /**
              * Allows to switch step by id, it it's loaded
@@ -331,7 +307,7 @@ var Rotator = null;
                     else
                         self.disablePrevButton();
                 });
-            }
+            };
 
             /**
              * Gets a max score for this step
@@ -343,7 +319,7 @@ var Rotator = null;
                     return settings[step]['score'];
                 else
                     return settings[visibleStep]['score'];
-            }
+            };
 
             /**
              * Performs transition to the next level
@@ -352,43 +328,35 @@ var Rotator = null;
              */
             this.nextStep = function (callback) {
                 var next = visibleStep + 1;
-                if (next >= settings.length) {
-                    LOGGER.info('No next step');
-                    return false;
-                }
+                if (next >= settings.length)
+                    throw new IllegalStateException('No next step');
                 LOGGER.debug("LAST: " + lastLoadedStep + "; NEXT: " + next);
                 if (next > lastLoadedStep) {
                     loadStep(next, function () {
-                        fadeStepIn(next);
-                        if (typeof  callback === "function")
-                            callback();
+                        fadeStepIn(next, callback);
                     });
                 } else {
-                    fadeStepIn(next);
-                    if (typeof  callback === "function")
-                        callback();
+                    fadeStepIn(next, callback);
                 }
                 next >= lastLoadedStep ? this.disableNextButton() : this.enableNextButton();
                 this.enablePrevButton();
                 return true;
-            }
+            };
 
             /**
              * Performs transition to the prev level
              * @param callback {function} callback to call after changing step
-             * @returns {boolean} true, if the transition was successful, otherwise - false
              */
             this.prevStep = function (callback) {
                 var prev = visibleStep - 1;
-                if (prev >= 0 && prev < lastLoadedStep) {
-                    fadeStepIn(prev);
-                    this.enableNextButton();
-                } else {
-                    LOGGER.error("Bad previous step: " + prev);
-                }
+                if (prev < 0 || prev > lastLoadedStep)
+                    throw new IllegalStateException("Bad previous step: " + prev);
+                fadeStepIn(prev, callback);
+                this.enableNextButton();
+
                 if (prev <= 0)
                     this.disablePrevButton();
-            }
+            };
 
             /**
              * Gets current step's index
@@ -396,7 +364,7 @@ var Rotator = null;
              */
             this.currentStepId = function () {
                 return visibleStep;
-            }
+            };
 
             /**
              * Gets last loaded step's index
@@ -404,7 +372,7 @@ var Rotator = null;
              */
             this.lastLoadedStepId = function () {
                 return lastLoadedStep;
-            }
+            };
 
             /**
              * Factory method for preloading first step
@@ -414,8 +382,9 @@ var Rotator = null;
                 loadStepsSettings(function () {
                     loadStep(0, function () {
                         fadeStepIn(0, callback);
+                        self.disablePrevButton();
                     });
                 });
-            }
+            };
         });
 })(jQuery, Logger, Templatetor, Scorer, Cogwheel);

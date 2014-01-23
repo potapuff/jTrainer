@@ -16,7 +16,7 @@ function Logger() {
     var getCaller = function () {
         var stack = (new Error).stack.match(/^(?!.*Logger).*$/gm);
         return stack[1].replace(/^\s+|\s+$/g, '');
-    }
+    };
 
     /**
      * This method perform logging objects depending on message type.
@@ -69,7 +69,7 @@ function Logger() {
             }
         }
         console.groupEnd();
-    }
+    };
 
     /**
      * Displays blue colored message
@@ -78,7 +78,7 @@ function Logger() {
     this.debug = function () {
         if (Logger.level === 0)
             consoleLog(arguments, _debug);
-    }
+    };
 
     /**
      * Displays mustard colored message
@@ -87,7 +87,7 @@ function Logger() {
     this.info = function () {
         if (Logger.level <= 1)
             consoleLog(arguments, _info);
-    }
+    };
 
     /**
      * Displays pink colored message
@@ -96,17 +96,16 @@ function Logger() {
     this.catching = function () {
         if (Logger.level <= 2)
             consoleLog(arguments, _catching);
-    }
+    };
 
     /**
      * Displays red colored message
-     * @param {*} {*} any amount of object to show as error
+     * @param {*} any amount of object to show as error
      */
     this.error = function () {
         if (Logger.level <= 2)
             consoleLog(arguments, _error);
-    }
-
+    };
 };
 Logger.level = 0;
 

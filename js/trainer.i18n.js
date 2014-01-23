@@ -6,8 +6,8 @@ var I18N = null;
      */
     I18N = new
         (function () {
-            var LOGGER = new _Logger('I18N');
-            var LANGPATH = 'langs/';
+            var LOGGER = new _Logger();
+            var LANG_PATH = 'langs/';
 
             var langs = [];
             var currentLangData = null;
@@ -19,25 +19,25 @@ var I18N = null;
              * @returns {I18N} current object (flow)
              */
             this.setPath = function (p) {
-                LANGPATH = p;
+                LANG_PATH = p;
                 return this;
-            }
+            };
 
             /**
              * Sets an object of all available languages
              * @param a {Object} assoc array of allowed languages
              * @returns {I18N} current object (flow)
              */
-            this.setAvailbleLanguages = function (a) {
-                if ((typeof a === "object")) {
-                    for (var key in a) {
-                        if (a.hasOwnProperty(key)) {
-                            langs[key] = a[key];
-                        }
+            this.setAvailableLanguages = function (a) {
+                if (typeof a !== "object")
+                    throw new IllegalArgumentException("Langs should be an object (assoc array)");
+                for (var key in a) {
+                    if (a.hasOwnProperty(key)) {
+                        langs[key] = a[key];
                     }
                 }
                 return this;
-            }
+            };
 
             /**
              * Sets current language of trainer.
@@ -51,7 +51,7 @@ var I18N = null;
                 LOGGER.debug(typeof langs);
 
                 if (!langs.hasOwnProperty(l)) {
-                    LOGGER.error('Language is not one of available languages')
+                    LOGGER.info('Language is not one of available languages. I\'ll set another, ok?');
                     for (var code in langs) {
                         currentLangCode = code;
                         break;
@@ -60,42 +60,38 @@ var I18N = null;
                     currentLangCode = l;
                 }
                 return this;
-            }
+            };
 
             /**
              * Loads language data from json lang database
              * @param callback {function} a callback, that will be called after a successful download
              */
             this.loadLanguage = function (callback) {
-                $.get(LANGPATH + currentLangCode + '.json')
+                $.get(LANG_PATH + currentLangCode + '.json')
                     .done(function (data) {
                         LOGGER.info('Language data loaded...');
-                        if (!data || !data.hasOwnProperty('lang') || !data.hasOwnProperty('local')) {
-                            LOGGER.error('Language file looks bad');
-                            currentLangCode = null;
-                            return;
-                        }
+                        if (!data || !data.hasOwnProperty('lang') || !data.hasOwnProperty('local'))
+                            throw new IllegalDataException('Language file looks bad');
+
                         LOGGER.info('Language file is good');
                         currentLangData = data;
                         if (typeof(callback) === "function")
                             callback();
                     }).fail(function (jqxhr, settings, exception) {
-                        LOGGER.catching(exception);
                         currentLangCode = null;
+                        throw new IllegalAsyncStateException(exception);
                     });
-            }
+            };
 
             /**
              * Gets the language strings
              * @returns {Object} assoc array of lang constants
              */
             this.getConstants = function () {
-                if (!currentLangData) {
-                    LOGGER.error('Language file is not loaded');
-                    return false;
-                }
+                if (!currentLangData)
+                    throw new IllegalStateException('Language file is not loaded');
                 return currentLangData['lang'];
-            }
+            };
 
             /**
              * Gets language names from available languages
@@ -103,7 +99,7 @@ var I18N = null;
              */
             this.getLangNames = function () {
                 return langs;
-            }
+            };
 
             /**
              * Gets a language code of current language
@@ -111,6 +107,7 @@ var I18N = null;
              */
             this.getCurrentLang = function () {
                 return currentLangCode;
-            }
+            };
         });
-})(jQuery, Logger);
+})
+    (jQuery, Logger);

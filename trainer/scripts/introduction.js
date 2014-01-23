@@ -8,12 +8,16 @@ var introduction = function () {
     this.mustache = function () {
         var langList = new Select('languageSelect').addAttribute('onchange', 'window.location.href = \'/?lang=\' + $(this).val()');
         var langs = I18N.getLangNames();
+        var currentLang = I18N.getCurrentLang();
         for (var code in langs) {
             if (langs.hasOwnProperty(code)) {
-                langList.addOption(langs[code], code);
+                if (code == currentLang)
+                    langList.addOption(langs[code], code, true);
+                else
+                    langList.addOption(langs[code], code, false);
             }
         }
 
-        return {LANG_LIST: langList.setDefaultValue(I18N.getCurrentLang()).render()}
+        return {LANG_LIST: langList.render()}
     }
 }

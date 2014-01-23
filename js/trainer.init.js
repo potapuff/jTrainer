@@ -21,7 +21,7 @@ $(document).ready(function () {
                .enableNextButton();
 
         Cogwheel.setText('Setting up i18n');
-        I18N.setAvailbleLanguages(config['LANGUAGES']);
+        I18N.setAvailableLanguages(config['LANGUAGES']);
         var langParam = Service.getUrlParam('lang');
         if (langParam != '')
             I18N.setLanguage(langParam);

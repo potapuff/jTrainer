@@ -30,10 +30,11 @@ var Validator = null;
              * @returns {Validator} current object (flow)
              */
             this.setStrictMode = function (b) {
-                if (typeof b === "boolean")
-                    isStrict = b;
+                if (typeof b !== "boolean")
+                    throw new IllegalArgumentException("Mode switch should be boolean");
+                isStrict = b;
                 return this;
-            }
+            };
 
             /**
              * Sets an amount of attempts in strict mode, that user can use to write a correct answer.
@@ -41,10 +42,11 @@ var Validator = null;
              * @returns {Validator} current object (flow)
              */
             this.setAttempts = function (a) {
-                if (typeof a === "number" && a > 0)
-                    attempts = a;
+                if (typeof a !== "number" || a <= 0)
+                    throw new IllegalArgumentException("Amount of attempts should be a number greater then zero");
+                attempts = a;
                 return this;
-            }
+            };
 
             /**
              * Adds an object to observe by the Validator.
@@ -53,41 +55,32 @@ var Validator = null;
              * @returns {Validator} current object (flow)
              */
             this.addValidator = function (o, v) {
-                if (!(o instanceof $)) {
-                    LOGGER.error('Object should be an instance of $');
+                if (!(o instanceof $))
+                    throw new IllegalArgumentException('Object should be an instance of $');
+                targets.push(o);
+                if (typeof v === "object") {
+                    values.push(v);
                 } else {
-                    targets.push(o);
-                    if (typeof v === "object") {
-                        values.push(v);
-                    } else {
-                        values.push([v]);
-                    }
+                    values.push([v]);
                 }
                 return this;
             };
 
             /**
              * Method validates all Validator's observables.
-             * @returns {boolean} check state. true - if all observables correspond to their correct values​​,
-             *          otherwise - false
              */
             this.validate = function () {
                 LOGGER.debug("CHECKING VALIDATOR:", targets, values);
                 if (isStrict)
-                    LOGGER.debug("SCRICT MODE VALIDATION");
-                if (fulfilled === true) {
-                    LOGGER.info('I ended up here. Stop clicking validate!');
-                    return;
-                } else if ($.isEmptyObject(targets)) {
-                    LOGGER.error('Targets are empty, nothing to check');
-                    return;
-                } else if (targets.length != values.length) {
-                    LOGGER.error('Something goes wrong. targets.length != values.length !!!', targets, values);
-                    return;
-                } else if (attempts <= 0) {
-                    LOGGER.error('No attempts left');
-                    return;
-                }
+                    LOGGER.debug("SCRIPT MODE VALIDATION");
+                if (fulfilled === true)
+                    throw new IllegalStateException('I ended up here. Stop clicking validate!');
+                else if ($.isEmptyObject(targets))
+                    throw new IllegalStateException('Targets are empty, nothing to check');
+                else if (targets.length != values.length)
+                    throw new IllegalStateException('Something goes wrong. targets.length != values.length !!!');
+                else if (attempts <= 0)
+                    throw new IllegalStateException('No attempts left. Go next level.');
 
                 LOGGER.debug("----------- FOR LOOP ------------- ");
                 var checkState = true,
@@ -124,9 +117,9 @@ var Validator = null;
                 } else {
                     if (isStrict === true) {
                         attempts--;
-                        LOGGER.debug("STRICT CHECK FAILDE. ATTEMPS LEFT: " + attempts);
+                        LOGGER.debug("STRICT CHECK FAILED. ATTEMPTS LEFT: " + attempts);
                         if (attempts <= 0) {
-                            LOGGER.debug("NO attemps left");
+                            LOGGER.debug("NO attempts left");
                             _Rotator.enableNextButton();
                             var stepScore = _Rotator.getStepScore();
                             var totalElements = targets.length;
@@ -140,6 +133,6 @@ var Validator = null;
                     _Rotator.disableNextButton();
                 }
                 return checkState;
-            }
-        }
+            };
+        };
 })(jQuery, Logger, Rotator, Scorer);
