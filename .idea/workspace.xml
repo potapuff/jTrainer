@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="74ddb861-ee28-4095-aa93-a6834e3fd39a" name="Default" comment="* Fix switchStep method in Rotator&#10;* Hash history implemented (HTML5 History in future)&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/Ilia_Ovchinnikov.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
-      <change type="MOVED" beforePath="C:\OpenServer\domains\jTrainer.master\js\trainer.templator.js" afterPath="$PROJECT_DIR$/js/trainer.templatetor.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/trainer/scripts/introduction.js" afterPath="$PROJECT_DIR$/trainer/scripts/introduction.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/trainer.cogwheel.js" afterPath="$PROJECT_DIR$/js/trainer.cogwheel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/trainer.collections.js" afterPath="$PROJECT_DIR$/js/trainer.collections.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/trainer.elements.js" afterPath="$PROJECT_DIR$/js/trainer.elements.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/trainer.i18n.js" afterPath="$PROJECT_DIR$/js/trainer.i18n.js" />
+    <list default="true" id="74ddb861-ee28-4095-aa93-a6834e3fd39a" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/langs/en.json" afterPath="$PROJECT_DIR$/langs/en.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/trainer/scripts/results.js" afterPath="$PROJECT_DIR$/trainer/scripts/results.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/langs/ru.json" afterPath="$PROJECT_DIR$/langs/ru.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/trainer/settings/trainer.config.json" afterPath="$PROJECT_DIR$/trainer/settings/trainer.config.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/trainer.init.js" afterPath="$PROJECT_DIR$/js/trainer.init.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/trainer.logger.js" afterPath="$PROJECT_DIR$/js/trainer.logger.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/trainer.rotator.js" afterPath="$PROJECT_DIR$/js/trainer.rotator.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/trainer.scorer.js" afterPath="$PROJECT_DIR$/js/trainer.scorer.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/trainer.service.js" afterPath="$PROJECT_DIR$/js/trainer.service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/trainer.validator.js" afterPath="$PROJECT_DIR$/js/trainer.validator.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="trainer-mustache.edu.iws" />
@@ -41,46 +32,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="3" selection-start="613" selection-end="613" vertical-scroll-proportion="-4.730769" vertical-offset="149" max-vertical-offset="1462">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="trainer.logger.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/trainer.logger.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="101" column="24" selection-start="2940" selection-end="2940" vertical-scroll-proportion="0.0" vertical-offset="1666" max-vertical-offset="2176">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="trainer.service.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/trainer.service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="42" selection-start="195" selection-end="195" vertical-scroll-proportion="0.30357143" vertical-offset="0" max-vertical-offset="1989">
+            <state line="97" column="30" selection-start="4077" selection-end="4077" vertical-scroll-proportion="0.6634799" vertical-offset="1302" max-vertical-offset="2703">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="trainer.i18n.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/trainer.i18n.js">
+      <file leaf-file-name="results.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/trainer/scripts/results.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="30" selection-start="2024" selection-end="2024" vertical-scroll-proportion="0.0" vertical-offset="767" max-vertical-offset="2006">
+            <state line="6" column="10" selection-start="142" selection-end="142" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="trainer.validator.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/trainer.validator.js">
+      <file leaf-file-name="trainer.init.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/trainer.init.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="120" column="32" selection-start="5574" selection-end="5574" vertical-scroll-proportion="0.0" vertical-offset="1927" max-vertical-offset="2431">
+            <state line="44" column="20" selection-start="1835" selection-end="1835" vertical-scroll-proportion="0.0" vertical-offset="344" max-vertical-offset="918">
               <folding />
             </state>
           </provider>
@@ -106,18 +79,13 @@
         <option value="$PROJECT_DIR$/js/trainer.observer.js" />
         <option value="$PROJECT_DIR$/trainer/settings/trainer.steps.json" />
         <option value="$PROJECT_DIR$/trainer/results.html" />
-        <option value="$PROJECT_DIR$/langs/en.json" />
-        <option value="$PROJECT_DIR$/langs/ru.json" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/trainer/elementstest.html" />
-        <option value="$PROJECT_DIR$/trainer/settings/trainer.config.json" />
         <option value="$PROJECT_DIR$/trainer/introduction.html" />
-        <option value="$PROJECT_DIR$/trainer/scripts/results.js" />
         <option value="$PROJECT_DIR$/css/trainer.style.css" />
         <option value="$PROJECT_DIR$/trainer/scripts/elementstest.js" />
         <option value="$PROJECT_DIR$/js/trainer.templator.js" />
         <option value="$PROJECT_DIR$/js/trainer.templatetorr.js" />
-        <option value="$PROJECT_DIR$/js/trainer.scorer.js" />
         <option value="$PROJECT_DIR$/js/trainer.templatetor.js" />
         <option value="$PROJECT_DIR$/trainer/scripts/introduction.js" />
         <option value="$PROJECT_DIR$/js/trainer.cogwheel.js" />
@@ -125,11 +93,16 @@
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/js/trainer.i18n.js" />
         <option value="$PROJECT_DIR$/js/trainer.elements.js" />
-        <option value="$PROJECT_DIR$/js/trainer.init.js" />
         <option value="$PROJECT_DIR$/js/trainer.rotator.js" />
         <option value="$PROJECT_DIR$/js/trainer.logger.js" />
         <option value="$PROJECT_DIR$/js/trainer.validator.js" />
+        <option value="$PROJECT_DIR$/langs/en.json" />
+        <option value="$PROJECT_DIR$/langs/ru.json" />
+        <option value="$PROJECT_DIR$/trainer/settings/trainer.config.json" />
+        <option value="$PROJECT_DIR$/js/trainer.scorer.js" />
+        <option value="$PROJECT_DIR$/js/trainer.init.js" />
         <option value="$PROJECT_DIR$/js/trainer.service.js" />
+        <option value="$PROJECT_DIR$/trainer/scripts/results.js" />
       </list>
     </option>
   </component>
@@ -262,6 +235,38 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="trainer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trainer-mustache.edu" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jTrainer.master" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trainer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trainer-mustache.edu" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jTrainer.master" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="langs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -416,7 +421,11 @@
       <created>1390385020211</created>
       <updated>1390385020211</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="* Major code review&#10;* Radio and radios elements implemented">
+      <created>1390511616834</created>
+      <updated>1390511616834</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -443,12 +452,13 @@
     <frame x="683" y="0" width="683" height="738" extended-state="0" />
     <editor active="false" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850242" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2996454" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32833335" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24907063" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.43343654" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3993808" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39893618" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -458,7 +468,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850242" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
@@ -486,7 +495,8 @@
     <MESSAGE value="* Code review 'n' cleaning&#10;* Fully documented with JSDoc&#10;* Element &quot;LangList&quot; deprecated and deleted&#10;" />
     <MESSAGE value="* Rotator hotfix" />
     <MESSAGE value="* Fix switchStep method in Rotator&#10;* Hash history implemented (HTML5 History in future)" />
-    <option name="LAST_COMMIT_MESSAGE" value="* Fix switchStep method in Rotator&#10;* Hash history implemented (HTML5 History in future)" />
+    <MESSAGE value="* Major code review&#10;* Radio and radios elements implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="* Major code review&#10;* Radio and radios elements implemented" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -603,11 +613,6 @@
         <state line="23" column="37" selection-start="737" selection-end="737" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="1071" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/langs/en.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="33" selection-start="997" selection-end="997" vertical-scroll-proportion="0.74820143" vertical-offset="9" max-vertical-offset="595" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/trainer/results.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="10" selection-start="154" selection-end="154" vertical-scroll-proportion="0.093065694" vertical-offset="0" max-vertical-offset="548" />
@@ -636,16 +641,6 @@
         <state line="5" column="23" selection-start="137" selection-end="137" vertical-scroll-proportion="0.14808363" vertical-offset="0" max-vertical-offset="9792" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/trainer/settings/trainer.config.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="25" selection-start="128" selection-end="128" vertical-scroll-proportion="0.18613139" vertical-offset="0" max-vertical-offset="548" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/trainer/scripts/results.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="1" selection-start="0" selection-end="403" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/trainer/introduction.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="12" selection-start="442" selection-end="442" vertical-scroll-proportion="-7.1923075" vertical-offset="0" max-vertical-offset="357" />
@@ -661,13 +656,6 @@
     <entry file="file://$PROJECT_DIR$/css/trainer.style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="41" column="19" selection-start="938" selection-end="938" vertical-scroll-proportion="0.0" vertical-offset="378" max-vertical-offset="1445">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/langs/ru.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="21" selection-start="1044" selection-end="1044" vertical-scroll-proportion="0.76642334" vertical-offset="5" max-vertical-offset="612">
           <folding />
         </state>
       </provider>
@@ -707,13 +695,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/trainer.scorer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="35" selection-start="269" selection-end="269" vertical-scroll-proportion="-1.2261904" vertical-offset="839" max-vertical-offset="1343">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/trainer.collections.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="33" selection-start="427" selection-end="427" vertical-scroll-proportion="-3.4861112" vertical-offset="2046" max-vertical-offset="2550">
@@ -742,13 +723,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/trainer.init.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="39" selection-start="1188" selection-end="1188" vertical-scroll-proportion="0.5055762" vertical-offset="255" max-vertical-offset="833">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/trainer.rotator.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="316" column="17" selection-start="13011" selection-end="13011" vertical-scroll-proportion="0.33333334" vertical-offset="5197" max-vertical-offset="6715">
@@ -765,37 +739,79 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/langs/ru.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="3" selection-start="613" selection-end="613" vertical-scroll-proportion="-4.730769" vertical-offset="149" max-vertical-offset="1462">
+        <state line="4" column="42" selection-start="128" selection-end="128" vertical-scroll-proportion="0.1262525" vertical-offset="5" max-vertical-offset="595">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/langs/en.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="43" selection-start="126" selection-end="126" vertical-scroll-proportion="0.13627255" vertical-offset="0" max-vertical-offset="578">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trainer/settings/trainer.config.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="4" selection-start="107" selection-end="122" vertical-scroll-proportion="-3.9230769" vertical-offset="0" max-vertical-offset="238">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/trainer.logger.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="101" column="24" selection-start="2940" selection-end="2940" vertical-scroll-proportion="0.0" vertical-offset="1666" max-vertical-offset="2176">
+        <state line="101" column="24" selection-start="2940" selection-end="2940" vertical-scroll-proportion="0.10873786" vertical-offset="1661" max-vertical-offset="2176">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="3" selection-start="613" selection-end="613" vertical-scroll-proportion="0.25840336" vertical-offset="149" max-vertical-offset="1462">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/trainer.i18n.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="30" selection-start="2024" selection-end="2024" vertical-scroll-proportion="0.0" vertical-offset="767" max-vertical-offset="2006">
+        <state line="56" column="30" selection-start="2024" selection-end="2024" vertical-scroll-proportion="0.3537285" vertical-offset="767" max-vertical-offset="2006">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/trainer.validator.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="120" column="32" selection-start="5574" selection-end="5574" vertical-scroll-proportion="0.0" vertical-offset="1927" max-vertical-offset="2431">
+        <state line="120" column="32" selection-start="5574" selection-end="5574" vertical-scroll-proportion="0.25239006" vertical-offset="1908" max-vertical-offset="2431">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/trainer.scorer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="85" column="10" selection-start="2823" selection-end="2823" vertical-scroll-proportion="0.52007645" vertical-offset="1173" max-vertical-offset="1734">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/trainer.init.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="20" selection-start="1835" selection-end="1835" vertical-scroll-proportion="0.0" vertical-offset="344" max-vertical-offset="918">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trainer/scripts/results.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="10" selection-start="142" selection-end="142" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/trainer.service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="42" selection-start="195" selection-end="195" vertical-scroll-proportion="0.30357143" vertical-offset="0" max-vertical-offset="1989">
+        <state line="97" column="30" selection-start="4077" selection-end="4077" vertical-scroll-proportion="0.6634799" vertical-offset="1302" max-vertical-offset="2703">
           <folding />
         </state>
       </provider>

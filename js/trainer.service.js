@@ -1,6 +1,6 @@
 var Service;
 
-(function ($) {
+(function ($, _Scorer) {
     /**
      * This object contains some service methods
      * @instance
@@ -10,7 +10,7 @@ var Service;
             var CONFIG_FILE = 'trainer/settings/trainer.config.json';
             var trainerVersion = '1.6 build23012014';
             var trainerSetting = null;
-
+            var reportUrl;
             /**
              * Sets trainer's config file path
              * @param p {String} path to trainer's config file
@@ -63,8 +63,50 @@ var Service;
             this.about = function () {
                 alert('jTrainer v' + trainerVersion + '\nSumDU Distance Learning E-Trainer\nAuthor: Ilia Ovchinnikov');
             };
+
+            this.notifyServer = function (callback) {
+                var host = window.location.href;
+                if (host.indexOf('index.html') != '-1')
+                    host = host.substring(0, host.indexOf('index.html'));
+                var server_info_url, server_url, send_report_url;
+                server_info_url = host + 'server_info.txt';
+                $.get(server_info_url)
+                    .done(function (data) {
+                        server_url = 'http://' + window.location.host + data.replace('server_url=', '');
+                        $.get(server_url)
+                            .done(function (data) {
+                                send_report_url = 'http://' + window.location.host + data.replace('send_report_url=', '');
+                                $.get(send_report_url);
+                                reportUrl = send_report_url;
+                                if (typeof callback === "function")
+                                    callback();
+                            }).fail(function (jqxhr, settings, exception) {
+                                throw new IllegalAsyncStateException(exception);
+                            });
+                    }).fail(function (jqxhr, settings, exception) {
+                        throw new IllegalAsyncStateException(exception);
+                    });
+                return host;
+            };
+
+            this.pushResults = function (callback) {
+                if (!reportUrl)
+                    throw new IllegalStateException('Server is not notified yet');
+                $.post(reportUrl,
+                    {
+                        total_points: _Scorer.getTotalScore(),
+                        user_points: _Scorer.getScore(),
+                        is_done: 1,
+                        user_reply: "Прохождение тренажера закончено"
+                    }).done(function () {
+                        if (typeof callback === "function")
+                            callback();
+                    }).fail(function (jqxhr, settings, exception) {
+                        throw new IllegalAsyncStateException(exception);
+                    });
+            };
         });
-})(jQuery);
+})(jQuery, Scorer);
 
 function IllegalArgumentException(message) {
     this.name = 'IllegalArgumentException';

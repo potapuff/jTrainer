@@ -4,6 +4,7 @@ var results = function () {
     }
 
     this.postDispatch = function () {
+        //Service.pushResults();
     }
 
     this.mustache = function () {

@@ -31,13 +31,18 @@ $(document).ready(function () {
         Cogwheel.setText('Loading language file');
         I18N.loadLanguage(function () {
             Cogwheel.setText('Reading language file');
-            Templatetor.extendConstView(I18N.getConstants());
+            Templatetor.extendConstView(I18N.getConstants())
+                       .extendConstView({TRAINER_SCORE: config['TRAINER_SCORE']});
+            Scorer.setTotalScore(config['TRAINER_SCORE']);
             var Tpl = new Templatetor();
             Tpl.replace(true).setTemplate($('html')).render();
             Cogwheel.setText('Starting trainer');
             Rotator.init(function () {
                 Scorer.start();
-                Cogwheel.hide();
+                Cogwheel.setText('Notifying server');
+                /*Service.notifyServer(function() {
+                    Cogwheel.hide();
+                })*/
             });
         });
     });

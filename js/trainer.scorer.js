@@ -5,6 +5,7 @@ var Scorer = new
         var startTime;
         var endTime;
         var diffTime;
+        var totalScore;
 
         /**
          * Starts monitoring
@@ -29,12 +30,14 @@ var Scorer = new
         this.addScore = function (s) {
             if (typeof s !== "number")
                 throw new IllegalStateException("Start scorer first!");
+            else if (s > totalScore)
+                throw new IllegalStateException("Illegal adding");
             score += s;
         };
 
         /**
          * Gets a time when monitoring was started
-         * @returns {String|Boolean} formatted time string and false, if monitoring is not finished yet.
+         * @returns {String} formatted time string and false, if monitoring is not finished yet.
          */
         this.getFormattedStartTime = function () {
             if (!startTime)
@@ -44,7 +47,7 @@ var Scorer = new
 
         /**
          * Gets a time when monitoring was ended
-         * @returns {String|Boolean} formatted time string and false, if monitoring is not finished yet.
+         * @returns {String} formatted time string and false, if monitoring is not finished yet.
          */
         this.getFormattedEndTime = function () {
             if (!startTime)
@@ -54,7 +57,7 @@ var Scorer = new
 
         /**
          * Gets time time difference between start and end of monitoring in seconds
-         * @returns {Number|Boolean} time diff in sec or false, if monitoring is not finished yet.
+         * @returns {Number} time diff in sec or false, if monitoring is not finished yet.
          */
         this.getTimeDifference = function () {
             if (!endTime)
@@ -64,11 +67,31 @@ var Scorer = new
 
         /**
          * Gets a total score of user
-         * @returns {Number|Boolean} user's total score or false, if monitoring is not finished yet.
+         * @returns {Number} user's total score or false, if monitoring is not finished yet.
          */
         this.getScore = function () {
             if (!endTime)
                 throw new IllegalStateException("Finish scorer first!");
             return score;
         };
+
+        /**
+         * Gets a trainer's score
+         * @returns {Number} user's total score or false, if monitoring is not finished yet.
+         */
+        this.getTotalScore = function () {
+            if (!endTime)
+                throw new IllegalStateException("Finish scorer first!");
+            return totalScore;
+        };
+
+        /**
+         * Sets total score of the trainer
+         * @param s {Number} amount of points
+         */
+        this.setTotalScore = function (s) {
+            if (typeof s !== "number")
+                throw new IllegalArgumentException("Score should be a number");
+            totalScore = s;
+        }
     });
