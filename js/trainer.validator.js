@@ -89,13 +89,15 @@ var Validator = null;
                     var target = targets[i];
                     var currentValue = target.val();
                     var correctValues = values[i];
-                    if (!currentValue && isStrict === false)
+                    if (!currentValue && isStrict === false) {
+                        checkState = false;
                         continue;
+                    }
 
                     LOGGER.debug("# NOW CHECKING:", target, "IT's val = " + currentValue, "SHOULD BE:" + correctValues);
                     var occurrence = false;
                     for (var j = 0; j < correctValues.length; j++) {
-                        if (correctValues[j] == currentValue)
+                        if (correctValues[j].toLowerCase() == currentValue.toLowerCase())
                             occurrence = true;
                     }
                     LOGGER.error(target, target.prev());
