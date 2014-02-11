@@ -31,8 +31,8 @@ $(document).ready(function () {
         Cogwheel.setText('Loading language file');
         I18N.loadLanguage(function () {
             Cogwheel.setText('Reading language file');
-            Templatetor.extendConstView(I18N.getConstants())
-                       .extendConstView({TRAINER_SCORE: config['TRAINER_SCORE']});
+            Templatetor.extendConstView(I18N.getConstants());
+            Templatetor.extendConstView({TRAINER_SCORE: config['TRAINER_SCORE']});
             Scorer.setTotalScore(config['TRAINER_SCORE']);
             var Tpl = new Templatetor();
             Tpl.replace(true).setTemplate($('html')).render();

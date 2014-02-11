@@ -1,3 +1,135 @@
+function Element(n) {
+    var name, label, value, attributes = '', classes = ['form-control'];
+    if (typeof n !== "undefined")
+        name = n;
+
+
+    /**
+     * Sets element's name
+     * @param nm {String} name of the element
+     * @returns {Element} current object {flow)
+    */
+    this.setName = function (nm) {
+        if (typeof nm !== "string")
+            throw new IllegalArgumentException("Name should be a string");
+        name = nm;
+        return this;
+    };
+
+    /**
+     * Gets element's name
+     * @returns {String} name of the element
+     */
+    this.getName = function () {
+        return name;
+    };
+
+    /**
+     * Sets a label of element
+     * @param l {String} label of element
+     * @returns {Element} current object {flow)
+    */
+    this.setLabel = function (l) {
+        if (typeof l !== "string")
+            throw new IllegalArgumentException("Label should be a string");
+        label = l;
+        return this;
+    };
+
+    /**
+     * Gets a label of element
+     * @returns {String} label of element
+     */
+    this.getLabel = function () {
+        return label;
+    };
+
+    /**
+     * Sets a value of element
+     * @param v {String|Number} element's value
+     * @returns {Element} current object {flow)
+    */
+    this.setValue = function (v) {
+        if (typeof v !== "string" && typeof v !== "number")
+            throw new IllegalArgumentException("Value should be a string or number");
+        value = v;
+        return this;
+    };
+
+    /**
+     * Gets a value of element
+     * @returns {String} element's value
+     */
+    this.getValue = function () {
+        return value;
+    };
+
+    /**
+     * Renders the element
+     * SHOULD BE OVERRIDDEN
+     * @returns {String} rendered element
+     */
+    this.render = function () {
+        if (!this.getName() || !this.getValue())
+            throw new NoArgumentException('Check name and value of element');
+        return '<element><!-- Here should your element goes --></element>';
+    };
+
+    /**
+     * Adds attribute to element
+     * @param n {String} attribute's name
+     * @param v {String|Number} attribute's value
+     * @returns {Element} current object {flow)
+    */
+    this.addAttribute = function (n, v) {
+        if (typeof n !== "string")
+            throw new IllegalArgumentException("Attribute's name should be a string");
+        else if (typeof v !== "string" && typeof v !== "number")
+            throw new IllegalArgumentException("Value of attribute should be a string or number");
+        attributes += ' ' + n + '="' + v.toString() + '"';
+        return this;
+    };
+
+    /**
+     * Gets attributes of element
+     * @returns {String} of attribute=value pairs
+     */
+    this.getAttributes = function () {
+        return attributes;
+    };
+
+    /**
+     * Adds class to element
+     * @param c {String} class name to add
+     * @returns {Element} current object {flow)
+    */
+    this.addClass = function (c) {
+        if (typeof c !== "string")
+            throw new IllegalArgumentException("Class should be a string");
+        classes.push(c);
+        return this;
+    };
+
+    /**
+     * Gets classes of element
+     * @returns {String} of classes
+     */
+    this.getClasses = function () {
+        return classes.join(' ');
+    };
+
+    /**
+     * Removes class of element
+     * @param c {String} class name to remove
+     * @returns {Element} current object {flow)
+    */
+    this.removeClass = function (c) {
+        delete classes[c];
+        classes.length--;
+        return this;
+    };
+}
+
 var Select = null;
 var CheckBox = null;
 var Radio = null;
@@ -8,44 +140,8 @@ var LateX = null;
 
 (function ($, _Templatetor) {
     Radio = function (n) {
-        var name = n;
-        var label, value, checked = false;
-
-        /**
-         * Sets element's name
-         * @param nm {String} name of the element
-         * @returns {Radio} current object {flow)
-             */
-        this.setName = function (nm) {
-            if (typeof nm !== "string")
-                throw new IllegalArgumentException("Name should be a string");
-            name = nm;
-            return this;
-        };
-
-        /**
-         * Sets a label of element
-         * @param l {String} label of element
-         * @returns {Radio} current object {flow)
-             */
-        this.setLabel = function (l) {
-            if (typeof l !== "string")
-                throw new IllegalArgumentException("Label should be a string");
-            label = l;
-            return this;
-        };
-
-        /**
-         * Sets a value of element
-         * @param v {String|Number} element's value
-         * @returns {Radio} current object {flow)
-             */
-        this.setValue = function (v) {
-            if (typeof v !== "string" && typeof v !== "number")
-                throw new IllegalArgumentException("Value should be a string or number");
-            value = v;
-            return this;
-        };
+        Element.call(this, n);
+        var checked = false;
 
         /**
          * Makes radio checked
@@ -64,34 +160,24 @@ var LateX = null;
          * @returns {String} rendered element
          */
         this.render = function () {
-            if (!name || !value)
+            if (!this.getName() || !this.getValue())
                 throw new NoArgumentException('Check name and value of element');
             var result = '<div class="radio">\n';
             result += '<label>\n';
-            result += '<input type="radio" name="' + name + '" value="' + value + '" ' + (checked === true ? 'checked="checked"' : '') + '>\n';
-            result += label;
+            result += '<input type="radio" name="' + this.getName() + '" value="' + this.getValue() + '" ' + (checked === true ? 'checked="checked"' : '') + '>\n';
+            result += this.getLabel();
             result += '</label>\n';
             result += '</div>\n';
             return result;
         };
     };
+    Radio.prototype = new Element();
+    Radio.prototype.constructor = Radio;
 
     Radios =
         function (n) {
-            var name = n;
+            Element.call(this, n);
             var options = [];
-
-            /**
-             * Sets element's name
-             * @param nm {String} name of the element
-             * @returns {Radios} current object {flow)
-             */
-            this.setName = function (nm) {
-                if (typeof nm !== "string")
-                    throw new IllegalArgumentException("Name should be a string");
-                name = nm;
-                return this;
-            };
 
             /**
              * Adds a radio to radio-group
@@ -103,9 +189,11 @@ var LateX = null;
             this.addRadio = function (label, value, checked) {
                 if (typeof value !== "string" && typeof value !== "number")
                     throw new IllegalArgumentException('Value should be a number of string');
-                var radio = new Radio(name).setValue(value).checked(!!checked);
-                if (label)
-                    radio.setLabel(label);
+                else if (!this.getName())
+                    throw new IllegalStateException('Specify name of the radio-group first!');
+                var radio = new Radio(this.getName()).setValue(this.getValue()).checked(!!checked);
+                if (this.getLabel())
+                    radio.setLabel(this.getLabel());
                 options.push(radio);
                 return this;
             };
@@ -117,82 +205,31 @@ var LateX = null;
             this.render = function () {
                 if (options.length == 0)
                     throw new NoArgumentException('Nothing to render. Please add at least one radio.');
-                var result = '<div class="form-group" for="' + name + '">\n';
+                var result = '<div class="form-group" for="' + this.getName() + '">\n';
                 for (var i = 0; i < options.length; i++)
                     result += options[i].render();
                 result += '</div>\n';
                 return result;
             };
         };
+    Radios.prototype = new Element();
+    Radios.prototype.constructor = Radios;
 
     CheckBox =
         function (n) {
-            var name = n;
-            var attributes = '';
-            var label, value;
-
-            /**
-             * Sets element's name
-             * @param nm {String} checkbox name
-             * @returns {CheckBox} current object {flow)
-             */
-            this.setName = function (nm) {
-                if (typeof nm !== "string")
-                    throw new IllegalArgumentException("Name should be a string");
-                name = nm;
-                return this;
-            };
-
-            /**
-             * Adds attribute to checkbox
-             * @param n {String} attribute's name
-             * @param v {String|Number} attribute's value
-             * @returns {CheckBox} current object {flow)
-             */
-            this.addAttribute = function (n, v) {
-                if (typeof n !== "string")
-                    throw new IllegalArgumentException("Attribute's name should be a string");
-                else if (typeof v !== "string" && typeof v !== "number")
-                    throw new IllegalArgumentException("Value of attribute should be a string or number");
-                attributes += ' ' + n + '="' + v.toString() + '"';
-                return this;
-            };
-
-            /**
-             * Sets a label of element
-             * @param l {String} label of element
-             * @returns {CheckBox} current object {flow)
-             */
-            this.setLabel = function (l) {
-                if (typeof l !== "string")
-                    throw new IllegalArgumentException("Label should be a string");
-                label = l;
-                return this;
-            };
-
-            /**
-             * Sets a value of element
-             * @param v {String|Number} element's value
-             * @returns {CheckBox} current object {flow)
-             */
-            this.setValue = function (v) {
-                if (typeof v !== "string" && typeof v !== "number")
-                    throw new IllegalArgumentException("Value should be a string or number");
-                value = v;
-                return this;
-            };
+            Element.call(this, n);
 
             /**
              * Renders the element
              * @returns {String} rendered element
              */
             this.render = function () {
-                if (!name || !value)
+                if (!this.getName() || !this.getValue())
                     throw new NoArgumentException('Please check element\'s name and value.');
-                var result = '<div class="form-group" for="' + name + '">\n';
+                var result = '<div class="form-group" for="' + this.getName() + '">\n';
                 result += '<div class="checkbox">\n';
                 result += '<label>\n';
-                result += '<input type="checkbox" ' + (attributes ? attributes : '') + ' name="' + name + '" value="' + value + '">' + (label ? label : '') + '\n';
+                result += '<input type="checkbox" ' + (this.getAttributes() ? this.getAttributes() : '') + ' name="' + this.getName() + '" value="' + this.getValue() + '">' + (this.getLabel() ? this.getLabel() : '') + '\n';
                 result += '</label>\n';
                 result += '</div>\n';
                 if (_Templatetor.teplatable(result))
@@ -200,6 +237,10 @@ var LateX = null;
                 return result;
             };
         };
+    CheckBox.prototype = new Element();
+    CheckBox.prototype.constructor = CheckBox;
+
+
     /**
      * This class in a wrapper to html select tag.
      * @param n {String} select's name
@@ -207,59 +248,9 @@ var LateX = null;
      */
     Select =
         function (n) {
-            var name = n;
-            var attributes = '';
-
-            var classes = ['form-control'];
+            console.log("    ??? SEND:" + n);
+            Element.call(this, n);
             var options = [];
-
-            /**
-             * Sets element's name
-             * @param nm {String} select name
-             * @returns {Select} current object {flow)
-             */
-            this.setName = function (nm) {
-                if (typeof nm !== "string")
-                    throw new IllegalArgumentException("Name should be a string");
-                name = nm;
-                return this;
-            };
-
-            /**
-             * Adds class to element
-             * @param c {String} class name to add
-             * @returns {Select} current object {flow)
-             */
-            this.addClass = function (c) {
-                if (typeof c !== "string")
-                    throw new IllegalArgumentException("Class should be a string");
-                classes.push(c);
-                return this;
-            };
-
-            /**
-             * Removes class of element
-             * @param c {String} class name to remove
-             * @returns {Select} current object {flow)
-             */
-            this.removeClass = function (c) {
-                delete classes[c];
-                classes.length--;
-                return this;
-            };
-
-            /**
-             * Adds attribute to element
-             * @param n {String} attribute's name
-             * @param v {String|Number} attribute's value
-             * @returns {Select} current object {flow)
-             */
-            this.addAttribute = function (n, v) {
-                if (typeof n !== "string")
-                    throw new IllegalArgumentException("Attribute should be a string");
-                attributes += ' ' + n + '="' + v.toString() + '"';
-                return this;
-            };
 
             /**
              * Adds an option tag to element
@@ -292,11 +283,10 @@ var LateX = null;
              * @returns {String} rendered element
              */
             this.render = function () {
-                if (!name || Object.keys(options).length == 0)
+                if (!this.getName() || Object.keys(options).length == 0)
                     throw new Error('Please check element\'s name, values and default value');
-
-                var result = '<div class="form-group" for="' + name + '">\n';
-                result += '<select' + (attributes ? attributes : '') + ' name="' + name + '" class="' + classes.join(' ') + '">\n';
+                var result = '<div class="form-group" for="' + this.getName() + '">\n';
+                result += '<select' + (this.getAttributes() ? this.getAttributes() : '') + ' name="' + this.getName() + '" class="' + this.getClasses() + '">\n';
                 result += '<option value="-1" disabled="disabled">{{CHOOSE_SELECT}}</option>\n';
 
                 for (var i = 0; i < options.length; i++)
@@ -310,6 +300,9 @@ var LateX = null;
                 return result;
             };
         };
+    Select.prototype = new Element();
+    Select.prototype.constructor = Select;
+
 
     /**
      * This class in a wrapper to html text input.
@@ -318,58 +311,8 @@ var LateX = null;
      */
     TextInput =
         function (n) {
-            var name = n;
-            var attributes = '';
-            var classes = ['form-control'];
+            Element.call(this, n);
             var placeholder = '{{ENTER_TEXT}}';
-
-            /**
-             * Sets element's name
-             * @param nm {String} input name
-             * @returns {TextInput} current object {flow)
-             */
-            this.setName = function (nm) {
-                if (typeof nm !== "string")
-                    throw new IllegalArgumentException("Name should be a string");
-                name = nm;
-                return this;
-            };
-
-            /**
-             * Adds class to element
-             * @param c {TextInput} class name to add
-             * @returns {TextInput} current object {flow)
-             */
-            this.addClass = function (c) {
-                if (typeof c !== "string")
-                    throw new IllegalArgumentException("Class should be a string");
-                classes.push(c);
-                return this;
-            };
-
-            /**
-             * Removes class of element
-             * @param c {TextInput} class name to remove
-             * @returns {TextInput} current object {flow)
-             */
-            this.removeClass = function (c) {
-                delete classes[c];
-                classes.length--;
-                return this;
-            };
-
-            /**
-             * Adds attribute to element
-             * @param n {String} attribute's name
-             * @param v {String|Number} attribute's value
-             * @returns {TextInput} current object {flow)
-             */
-            this.addAttribute = function (n, v) {
-                if (typeof n !== "string")
-                    throw new IllegalArgumentException("Attribute should be a string");
-                attributes += ' ' + n + '="' + v.toString() + '"';
-                return this;
-            };
 
             /**
              * Sets placeholder text
@@ -400,16 +343,19 @@ var LateX = null;
              * @returns {String} rendered element
              */
             this.render = function () {
-                if (!name)
+                if (!this.getName())
                     throw new Error('Please check element\'s name. It\'s empty.');
-                var result = '<div class="form-group" for="' + name + '">\n';
-                result += '<input' + (attributes ? attributes : '') + ' type="text" name="' + name + '" class="' + classes.join(' ') + '" placeholder="' + placeholder + '">\n';
+                var result = '<div class="form-group" for="' + this.getName() + '">\n';
+                result += '<input' + (this.getAttributes() ? this.getAttributes() : '') + ' type="text" name="' + this.getName() + '" class="' + this.getClasses() + '" placeholder="' + placeholder + '">\n';
                 result += '</div>\n';
                 if (_Templatetor.teplatable(result))
                     result = new _Templatetor().setTemplate(result).render();
                 return result;
             };
         };
+    TextInput.prototype = new Element();
+    TextInput.prototype.constructor = TextInput;
+
 
     /**
      * This class is a wrapper to WolframAlpha API.

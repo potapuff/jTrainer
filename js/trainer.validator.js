@@ -97,7 +97,7 @@ var Validator = null;
                     LOGGER.debug("# NOW CHECKING:", target, "IT's val = " + currentValue, "SHOULD BE:" + correctValues);
                     var occurrence = false;
                     for (var j = 0; j < correctValues.length; j++) {
-                        if (correctValues[j].toLowerCase() == currentValue.toLowerCase())
+                        if ((correctValues[j] + '').toLowerCase() == (currentValue + '').toLowerCase())
                             occurrence = true;
                     }
                     LOGGER.error(target, target.prev());
