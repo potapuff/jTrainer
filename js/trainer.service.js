@@ -35,14 +35,16 @@ var Service;
              * @param callback {function} callback to call after successful file loading
              */
             this.loadConfig = function (callback) {
-                $.get(CONFIG_FILE)
-                    .done(function (data) {
-                        trainerSetting = data;
-                        if (typeof(callback) === "function")
-                            callback();
-                    }).fail(function (jqxhr, settings, exception) {
+                $.ajax({
+                    url: CONFIG_FILE,
+                    dataType: "JSON"
+                }).done(function (data) {
+                    trainerSetting = data;
+                    if (typeof(callback) === "function")
+                        callback();
+                }).fail(function (jqxhr, settings, exception) {
                         throw new IllegalAsyncStateException(exception);
-                    });
+                });
             };
 
             /**
@@ -65,11 +67,13 @@ var Service;
             };
 
             this.notifyServer = function (callback) {
+                LOGGER.debug("Notifying server...");
                 var host = window.location.href;
-                if (host.indexOf('index.html') != '-1')
-                    host = host.substring(0, host.indexOf('index.html'));
+                host = host.substring(0, host.lastIndexOf('/') + 1);
+                LOGGER.debug("Host:" + host);
                 var server_info_url, server_url, send_report_url;
                 server_info_url = host + 'server_info.txt';
+                LOGGER.debug('server_info_url: ' + server_info_url);
                 $.get(server_info_url)
                     .done(function (data) {
                         server_url = 'http://' + window.location.host + data.replace('server_url=', '');
@@ -92,15 +96,19 @@ var Service;
             this.pushResults = function (callback) {
                 if (!reportUrl)
                     throw new IllegalStateException('Server is not notified yet');
-                $.post(reportUrl,
-                    {
-                        total_points: _Scorer.getTotalScore(),
-                        user_points: _Scorer.getScore(),
-                        is_done: 1,
-                        user_reply: "Прохождение тренажера закончено"
-                    }).done(function () {
+
+                var uScore = _Scorer.getScore();
+                var uScoreInPercent = (Math.floor(uScore / _Scorer.getTotalScore()) * 100).toFixed(2);;
+                $.post(reportUrl, {
+                    total_points: _Scorer.getTotalScore(),
+                    user_points: uScore,
+                    is_done: 1,
+                    is_passed: 1,
+                    user_reply: uScoreInPercent >= 60 ? "YES - " + uScore : "NO - " + uScore
+                }).done(function (data) {
+                        LOGGER.debug("RESULT: " + data);
                         if (typeof callback === "function")
-                            callback();
+                            callback(data);
                     }).fail(function (jqxhr, settings, exception) {
                         throw new IllegalAsyncStateException(exception);
                     });

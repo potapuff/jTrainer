@@ -40,6 +40,7 @@ $(document).ready(function () {
             Rotator.init(function () {
                 Scorer.start();
                 Cogwheel.setText('Notifying server');
+                Cogwheel.hide();
                 /*Service.notifyServer(function() {
                     Cogwheel.hide();
                 })*/

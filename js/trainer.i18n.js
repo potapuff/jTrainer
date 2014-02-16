@@ -67,20 +67,22 @@ var I18N = null;
              * @param callback {function} a callback, that will be called after a successful download
              */
             this.loadLanguage = function (callback) {
-                $.get(LANG_PATH + currentLangCode + '.json')
-                    .done(function (data) {
-                        LOGGER.info('Language data loaded...');
-                        if (!data || !data.hasOwnProperty('lang') || !data.hasOwnProperty('local'))
-                            throw new IllegalDataException('Language file looks bad');
+                $.ajax({
+                    url: LANG_PATH + currentLangCode + '.json',
+                    dataType: "JSON"
+                }).done(function (data) {
+                    LOGGER.info('Language data loaded...');
+                    if (!data || !data.hasOwnProperty('lang') || !data.hasOwnProperty('local'))
+                        throw new IllegalDataException('Language file looks bad');
 
-                        LOGGER.info('Language file is good');
-                        currentLangData = data;
-                        if (typeof(callback) === "function")
-                            callback();
-                    }).fail(function (jqxhr, settings, exception) {
-                        currentLangCode = null;
-                        throw new IllegalAsyncStateException(exception);
-                    });
+                    LOGGER.info('Language file is good');
+                    currentLangData = data;
+                    if (typeof(callback) === "function")
+                        callback();
+                }).fail(function (jqxhr, settings, exception) {
+                    currentLangCode = null;
+                    throw new IllegalAsyncStateException(exception);
+                });
             };
 
             /**

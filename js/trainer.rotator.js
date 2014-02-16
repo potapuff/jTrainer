@@ -155,16 +155,18 @@ var Rotator = null;
              * @param callback {function} callback to call after loading
              */
             var loadStepsSettings = function (callback) {
-                $.get(SETTINGS_PATH)
-                    .done(function (data) {
-                        LOGGER.info('Settings data loaded...');
-                        settings = data;
-                        LOGGER.debug(settings);
-                        if (typeof(callback) === "function")
-                            callback();
-                    }).fail(function (jqxhr, settings, exception) {
-                        throw new IllegalAsyncStateException(exception);
-                    });
+                $.ajax({
+                    url: SETTINGS_PATH,
+                    dataType: "JSON"
+                }).done(function (data) {
+                    LOGGER.info('Settings data loaded...');
+                    settings = data;
+                    LOGGER.debug(settings);
+                    if (typeof(callback) === "function")
+                        callback();
+                }).fail(function (jqxhr, settings, exception) {
+                    throw new IllegalAsyncStateException(exception);
+                });
             };
 
             /**
