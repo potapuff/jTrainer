@@ -1,8 +1,9 @@
-function Element(n) {
-    var name, label, value, attributes = '', classes = ['form-control'];
-    if (typeof n !== "undefined")
-        name = n;
-
+function Element() {
+    this.name,
+        this.label,
+        this.value,
+        this.attributes = '',
+        this.classes = ['form-control'];
 
     /**
      * Sets element's name
@@ -12,7 +13,7 @@ function Element(n) {
     this.setName = function (nm) {
         if (typeof nm !== "string")
             throw new IllegalArgumentException("Name should be a string");
-        name = nm;
+        this.name = nm;
         return this;
     };
 
@@ -21,7 +22,7 @@ function Element(n) {
      * @returns {String} name of the element
      */
     this.getName = function () {
-        return name;
+        return this.name;
     };
 
     /**
@@ -32,7 +33,7 @@ function Element(n) {
     this.setLabel = function (l) {
         if (typeof l !== "string")
             throw new IllegalArgumentException("Label should be a string");
-        label = l;
+        this.label = l;
         return this;
     };
 
@@ -41,7 +42,7 @@ function Element(n) {
      * @returns {String} label of element
      */
     this.getLabel = function () {
-        return label;
+        return this.label;
     };
 
     /**
@@ -52,7 +53,7 @@ function Element(n) {
     this.setValue = function (v) {
         if (typeof v !== "string" && typeof v !== "number")
             throw new IllegalArgumentException("Value should be a string or number");
-        value = v;
+        this.value = v;
         return this;
     };
 
@@ -61,7 +62,7 @@ function Element(n) {
      * @returns {String} element's value
      */
     this.getValue = function () {
-        return value;
+        return this.value;
     };
 
     /**
@@ -86,7 +87,7 @@ function Element(n) {
             throw new IllegalArgumentException("Attribute's name should be a string");
         else if (typeof v !== "string" && typeof v !== "number")
             throw new IllegalArgumentException("Value of attribute should be a string or number");
-        attributes += ' ' + n + '="' + v.toString() + '"';
+        this.attributes += ' ' + n + '="' + v.toString() + '"';
         return this;
     };
 
@@ -95,7 +96,7 @@ function Element(n) {
      * @returns {String} of attribute=value pairs
      */
     this.getAttributes = function () {
-        return attributes;
+        return this.attributes;
     };
 
     /**
@@ -106,7 +107,7 @@ function Element(n) {
     this.addClass = function (c) {
         if (typeof c !== "string")
             throw new IllegalArgumentException("Class should be a string");
-        classes.push(c);
+        this.classes.push(c);
         return this;
     };
 
@@ -115,7 +116,7 @@ function Element(n) {
      * @returns {String} of classes
      */
     this.getClasses = function () {
-        return classes.join(' ');
+        return this.classes.join(' ');
     };
 
     /**
@@ -124,8 +125,8 @@ function Element(n) {
      * @returns {Element} current object {flow)
     */
     this.removeClass = function (c) {
-        delete classes[c];
-        classes.length--;
+        delete this.classes[c];
+        this.classes.length--;
         return this;
     };
 }
@@ -140,7 +141,8 @@ var LateX = null;
 
 (function ($, _Templatetor) {
     Radio = function (n) {
-        Element.call(this, n);
+        if (typeof n === "string")
+            this.setName(n);
         var checked = false;
 
         /**
@@ -176,7 +178,8 @@ var LateX = null;
 
     Radios =
         function (n) {
-            Element.call(this, n);
+            if (typeof n === "string")
+                this.setName(n);
             var options = [];
 
             /**
@@ -217,7 +220,8 @@ var LateX = null;
 
     CheckBox =
         function (n) {
-            Element.call(this, n);
+            if (typeof n === "string")
+                this.setName(n);
 
             /**
              * Renders the element
@@ -248,8 +252,8 @@ var LateX = null;
      */
     Select =
         function (n) {
-            console.log("    ??? SEND:" + n);
-            Element.call(this, n);
+            if (typeof n === "string")
+                this.setName(n);
             var options = [];
 
             /**
@@ -311,7 +315,8 @@ var LateX = null;
      */
     TextInput =
         function (n) {
-            Element.call(this, n);
+            if (typeof n === "string")
+                this.setName(n);
             var placeholder = '{{ENTER_TEXT}}';
 
             /**
