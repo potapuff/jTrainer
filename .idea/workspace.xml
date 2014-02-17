@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="74ddb861-ee28-4095-aa93-a6834e3fd39a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/trainer.elements.js" afterPath="$PROJECT_DIR$/js/trainer.elements.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/img/trainer/trainer-brand.png" afterPath="$PROJECT_DIR$/img/trainer/trainer-brand.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/trainer.style.css" afterPath="$PROJECT_DIR$/css/trainer.style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="trainer-mustache.edu.iws" />
@@ -26,10 +28,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="trainer.elements.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="trainer.elements.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/trainer.elements.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="6" selection-start="481" selection-end="481" vertical-scroll-proportion="0.33452594" vertical-offset="102" max-vertical-offset="7786">
+            <state line="17" column="6" selection-start="481" selection-end="481" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="7786">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="45" column="115" selection-start="2151" selection-end="2151" vertical-scroll-proportion="0.2802198" vertical-offset="612" max-vertical-offset="1445">
               <folding />
             </state>
           </provider>
@@ -58,7 +69,6 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/trainer/elementstest.html" />
         <option value="$PROJECT_DIR$/trainer/introduction.html" />
-        <option value="$PROJECT_DIR$/css/trainer.style.css" />
         <option value="$PROJECT_DIR$/trainer/scripts/elementstest.js" />
         <option value="$PROJECT_DIR$/js/trainer.templator.js" />
         <option value="$PROJECT_DIR$/js/trainer.templatetorr.js" />
@@ -74,11 +84,12 @@
         <option value="$PROJECT_DIR$/trainer/scripts/results.js" />
         <option value="$PROJECT_DIR$/js/trainer.validator.js" />
         <option value="$PROJECT_DIR$/js/trainer.init.js" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/js/trainer.service.js" />
         <option value="$PROJECT_DIR$/js/trainer.i18n.js" />
         <option value="$PROJECT_DIR$/js/trainer.rotator.js" />
         <option value="$PROJECT_DIR$/js/trainer.elements.js" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/css/trainer.style.css" />
       </list>
     </option>
   </component>
@@ -247,6 +258,38 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trainer-mustache.edu" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jTrainer.master" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="img" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trainer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trainer-mustache.edu" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jTrainer.master" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -264,6 +307,11 @@
     <property name="LayoutCode.rearrangeEntriesJavaScript" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="SearchEverywhereHistory" value="va" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\OpenServer\domains\jTrainer.master\img\trainer" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
@@ -396,7 +444,11 @@
       <created>1392586186286</created>
       <updated>1392586186287</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="* Fixed dog-nail in element's inheritance">
+      <created>1392587587086</created>
+      <updated>1392587587086</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -428,7 +480,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2996454" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24907063" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23048328" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23048328" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32833335" sideWeight="0.50037175" order="9" side_tool="true" content_ui="tabs" />
@@ -469,7 +521,8 @@
     <MESSAGE value="* Major code review&#10;* Radio and radios elements implemented" />
     <MESSAGE value="* Validator and init scripts fixed&#10;* Code refactoring in trainer.elements" />
     <MESSAGE value="* Fixed and tested interaction with the server&#10;* Specified AJAX dataType to &quot;JSON&quot; where is needed" />
-    <option name="LAST_COMMIT_MESSAGE" value="* Fixed and tested interaction with the server&#10;* Specified AJAX dataType to &quot;JSON&quot; where is needed" />
+    <MESSAGE value="* Fixed dog-nail in element's inheritance" />
+    <option name="LAST_COMMIT_MESSAGE" value="* Fixed dog-nail in element's inheritance" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -635,13 +688,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/trainer.style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="19" selection-start="938" selection-end="938" vertical-scroll-proportion="0.0" vertical-offset="378" max-vertical-offset="1445">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/DHTML.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1156" column="7" selection-start="17347" selection-end="17347" vertical-scroll-proportion="0.33275262" vertical-offset="19461" max-vertical-offset="64821">
@@ -751,13 +797,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="34" selection-start="2412" selection-end="2412" vertical-scroll-proportion="0.3809524" vertical-offset="642" max-vertical-offset="1462">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/trainer.service.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="40" column="18" selection-start="1179" selection-end="1281" vertical-scroll-proportion="0.65384614" vertical-offset="306" max-vertical-offset="2839">
@@ -774,7 +813,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/trainer.elements.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="6" selection-start="481" selection-end="481" vertical-scroll-proportion="0.33452594" vertical-offset="102" max-vertical-offset="7786">
+        <state line="17" column="6" selection-start="481" selection-end="481" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="7786">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/trainer.style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="30" selection-start="276" selection-end="276" vertical-scroll-proportion="0.32692307" vertical-offset="0" max-vertical-offset="1581">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="115" selection-start="2151" selection-end="2151" vertical-scroll-proportion="0.2802198" vertical-offset="612" max-vertical-offset="1445">
           <folding />
         </state>
       </provider>

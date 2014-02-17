@@ -1,80 +1,88 @@
 .modal-static {
-    position: fixed;
-    top: 50% !important;
-    left: 50% !important;
-    margin-top: -100px;
-    margin-left: -100px;
-    overflow: visible !important;
+    position    : fixed;
+    top         : 50% !important;
+    left        : 50% !important;
+    margin-top  : -100px;
+    margin-left : -100px;
+    overflow    : visible !important;
 }
 
 .modal-static,
 .modal-static .modal-dialog,
 .modal-static .modal-content {
-    width: 200px;
-    height: 200px;
+    width  : 200px;
+    height : 200px;
 }
 
 .modal-static .modal-dialog,
 .modal-static .modal-content {
-    padding: 0 !important;
-    margin: 0 !important;
+    padding : 0 !important;
+    margin  : 0 !important;
 }
 
 .form-control {
-    -webkit-transition: all 0.7s ease;
-    -moz-transition: all 0.7s ease;
-    -o-transition: all 0.7s ease;
-    -ms-transition: all 0.7s ease;
-    transition: all 0.7s ease;
+    -webkit-transition : all 0.7s ease;
+    -moz-transition    : all 0.7s ease;
+    -o-transition      : all 0.7s ease;
+    -ms-transition     : all 0.7s ease;
+    transition         : all 0.7s ease;
 }
 
 .has-success .form-control,
 .has-success .checkbox,
 .has-success .radio {
 
-    background: rgb(219, 255, 219);
-    -webkit-box-shadow: inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 3px #67b168;
-    box-shadow: inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 3px #67b168;
+    background         : rgb(219, 255, 219);
+    -webkit-box-shadow : inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 3px #67b168;
+    box-shadow         : inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 3px #67b168;
 }
 
 .has-error .form-control,
 .has-error .checkbox,
 .has-error .radio {
-    background: rgb(255, 234, 234);
-    -webkit-box-shadow: inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 3px #ce8483;
-    box-shadow: inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 3px #ce8483;
+    background         : rgb(255, 234, 234);
+    -webkit-box-shadow : inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 3px #ce8483;
+    box-shadow         : inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 3px #ce8483;
 }
 
 body {
-    background-image: url("../img/trainer/trainer-background.png");
+    background-image : url("../img/trainer/trainer-background.png");
 }
 
-.navbar-brand.trainer-brand {
-    background: url("../img/trainer/trainer-brand.png") 5px 50% no-repeat;
-    background-size: 40px 40px;
-    padding-left: 55px;
-    color: #efc84a;
+.navbar-brand {
+    color          : #efc84a !important;
+    padding-top    : 0;
+    padding-bottom : 0;
 }
 
-.navbar-brand.trainer-brand:hover {
-    color: #d14f3a;
+.navbar-brand .trainer-brand {
+    background     : url("../img/trainer/trainer-brand.png") no-repeat;
+    display        : inline-block;
+    vertical-align : middle;
+    width          : 191px;
+    height         : 50px;
+    margin         : 0 10px 0 0;
+}
+
+.navbar-brand:hover {
+    color : #d14f3a !important;
 }
 
 section.stepspace {
-    margin: 0 20px;
+    margin : 0 20px;
 }
 
 div.step {
-    display: none;
-    z-index: 0;
+    display : none;
+    z-index : 0;
 }
 
 div.step.current {
-    display: block;
-    z-index: 1;
+    display : block;
+    z-index : 1;
 }
 
 div.latex {
-    display: inline-block;
-    padding: 3px;
+    display : inline-block;
+    padding : 3px;
 }
