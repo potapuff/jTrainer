@@ -13,7 +13,7 @@ var elementstest = function () {
     this.postDispatch = function () {
         VElements = new Validator();
         VElements.addValidator($('select[name="test-select"]'), 2)
-            .addValidator($('input[name="test-textinput"]'), 'test')
+            .addValidator($('input[name="test-textinput"]'), ['test','text'],',')
             .setStrictMode(true);
         $('span.check').click(function () {
             VElements.validate()

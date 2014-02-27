@@ -19,7 +19,6 @@ var Validator = null;
 
             var fulfilled = false;
             var targets = [];
-            var values = [];
 
             var isStrict = false;
             var attempts = 3;
@@ -54,15 +53,12 @@ var Validator = null;
              * @param v {Array|*} correct values of element's value. It can be an array of values or only one value;
              * @returns {Validator} current object (flow)
              */
-            this.addValidator = function (o, v) {
+            this.addValidator = function (o, v, delimeter) {
                 if (!(o instanceof $))
                     throw new IllegalArgumentException('Object should be an instance of $');
-                targets.push(o);
-                if (typeof v === "object") {
-                    values.push(v);
-                } else {
-                    values.push([v]);
-                }
+                if (!$.isArray(v))
+                    v = [(v + '').toLowerCase()];
+                targets.push([o, v, delimeter]);
                 return this;
             };
 
@@ -70,15 +66,13 @@ var Validator = null;
              * Method validates all Validator's observables.
              */
             this.validate = function () {
-                LOGGER.debug("CHECKING VALIDATOR:", targets, values);
+                LOGGER.debug("CHECKING VALIDATOR:", targets);
                 if (isStrict)
                     LOGGER.debug("SCRIPT MODE VALIDATION");
                 if (fulfilled === true)
                     throw new IllegalStateException('I ended up here. Stop clicking validate!');
                 else if ($.isEmptyObject(targets))
                     throw new IllegalStateException('Targets are empty, nothing to check');
-                else if (targets.length != values.length)
-                    throw new IllegalStateException('Something goes wrong. targets.length != values.length !!!');
                 else if (attempts <= 0)
                     throw new IllegalStateException('No attempts left. Go next level.');
 
@@ -86,22 +80,27 @@ var Validator = null;
                 var checkState = true,
                     invalidTargets = 0;
                 for (var i = 0; i < targets.length; i++) {
-                    var target = targets[i];
-                    var currentValue = target.val();
-                    var correctValues = values[i];
+                    var target = targets[i][0];
+
+                    var currentValue = (target.val() + '').toLowerCase();
+                        currentValue = targets[i][2] ? currentValue.split(targets[i][2]) : [currentValue];
+                    var correctValues = targets[i][1];
                     if (!currentValue && isStrict === false) {
                         checkState = false;
                         continue;
                     }
-
-                    LOGGER.debug("# NOW CHECKING:", target, "IT's val = " + currentValue, "SHOULD BE:" + correctValues);
-                    var occurrence = false;
-                    for (var j = 0; j < correctValues.length; j++) {
-                        if ((correctValues[j] + '').toLowerCase() == (currentValue + '').toLowerCase())
-                            occurrence = true;
+                    LOGGER.debug("# VALIDATING TARGET <" + target.selector + ">:", "Current value:", currentValue, "Correct values:", correctValues);
+                    var isValid = true;
+                    if (currentValue.length != correctValues.length)
+                        isValid = false;
+                    else {
+                        for (var j = 0; j < currentValue.length; j++) {
+                            if ($.inArray(currentValue[j], correctValues) == -1)
+                                isValid = false;
+                        }
                     }
                     LOGGER.error(target, target.prev());
-                    if (occurrence) {
+                    if (isValid) {
                         LOGGER.debug('Target is good', target, 'target.val =' + currentValue, 'correctValues:', correctValues);
                         $('* [for="' + target.attr('name') + '"]').removeClass('has-error').addClass('has-success');
                     } else {
