@@ -3,7 +3,9 @@ function Element() {
         this.label,
         this.value,
         this.attributes = '',
-        this.classes = ['form-control'];
+        this.classes = ['form-control'],
+        this.id,
+        this.style;
 
     /**
      * Sets element's name
@@ -66,6 +68,54 @@ function Element() {
     };
 
     /**
+     * Sets #id to element
+     * @param id id tag's value
+     * @returns {Element} current object {flow)
+     */
+    this.setId = function (id) {
+        this.id = id + '';
+        return this;
+    };
+
+    /**
+     * Gets element's style
+     * @returns {string}
+     */
+    this.getStyle = function () {
+        return this.style;
+    };
+
+    /**
+     * Sets element's style
+     * @param st element's style
+     * @returns {Element} current object {flow)
+     */
+    this.setStyle = function (st) {
+        this.style = st + '';
+        return this;
+    };
+
+    /**
+     * Gets element's id
+     * @returns {string}
+     */
+    this.getId = function () {
+        return this.id;
+    };
+
+    /**
+     * Returns all params of elements in one string
+     * @returns {string} string of params
+     */
+    this.getParams = function () {
+        return ' ' + (this.getName() ? 'name="' + this.getName() + '" ' : '') +
+            (this.getId() ? 'id="' + this.getId() + '" ' : '') +
+            (this.getAttributes() ? this.getAttributes() + " " : '') +
+            (this.getClasses().length > 0 ? 'class="' + this.getClasses().join(' ') + '"' : '') +
+            (this.getStyle() ? 'style="' + this.getStyle() + '" ' : '') + ' ';
+
+    }
+    /**
      * Renders the element
      * SHOULD BE OVERRIDDEN
      * @returns {String} rendered element
@@ -116,7 +166,7 @@ function Element() {
      * @returns {String} of classes
      */
     this.getClasses = function () {
-        return this.classes.join(' ');
+        return this.classes;
     };
 
     /**
@@ -136,6 +186,10 @@ var CheckBox = null;
 var Radio = null;
 var Radios = null;
 var TextInput = null;
+
+var DraggableGroup = null;
+var DroppableArea = null;
+
 var WolframAlpha = null;
 var LateX = null;
 
@@ -164,9 +218,9 @@ var LateX = null;
         this.render = function () {
             if (!this.getName() || !this.getValue())
                 throw new NoArgumentException('Check name and value of element');
-            var result = '<div class="radio">\n';
+            var result = '<div class="radio" for="' + this.getName() + '">\n';
             result += '<label>\n';
-            result += '<input type="radio" name="' + this.getName() + '" value="' + this.getValue() + '" ' + (checked === true ? 'checked="checked"' : '') + '>\n';
+            result += '<input type="radio"' + this.getParams() + 'value="' + this.getValue() + '" ' + (checked === true ? 'checked="checked"' : '') + '>\n';
             result += this.getLabel();
             result += '</label>\n';
             result += '</div>\n';
@@ -233,7 +287,7 @@ var LateX = null;
                 var result = '<div class="form-group" for="' + this.getName() + '">\n';
                 result += '<div class="checkbox">\n';
                 result += '<label>\n';
-                result += '<input type="checkbox" ' + (this.getAttributes() ? this.getAttributes() : '') + ' name="' + this.getName() + '" value="' + this.getValue() + '">' + (this.getLabel() ? this.getLabel() : '') + '\n';
+                result += '<input type="checkbox"' + this.getParams() + '>' + (this.getLabel() ? this.getLabel() : '') + '\n';
                 result += '</label>\n';
                 result += '</div>\n';
                 if (_Templatetor.teplatable(result))
@@ -286,11 +340,12 @@ var LateX = null;
              * Renders the element
              * @returns {String} rendered element
              */
+
             this.render = function () {
                 if (!this.getName() || Object.keys(options).length == 0)
                     throw new Error('Please check element\'s name, values and default value');
                 var result = '<div class="form-group" for="' + this.getName() + '">\n';
-                result += '<select' + (this.getAttributes() ? this.getAttributes() : '') + ' name="' + this.getName() + '" class="' + this.getClasses() + '">\n';
+                result += '<select' + this.getParams() + '>\n';
                 result += '<option value="-1" disabled="disabled">{{CHOOSE_SELECT}}</option>\n';
 
                 for (var i = 0; i < options.length; i++)
@@ -351,7 +406,7 @@ var LateX = null;
                 if (!this.getName())
                     throw new Error('Please check element\'s name. It\'s empty.');
                 var result = '<div class="form-group" for="' + this.getName() + '">\n';
-                result += '<input' + (this.getAttributes() ? this.getAttributes() : '') + ' type="text" name="' + this.getName() + '" class="' + this.getClasses() + '" placeholder="' + placeholder + '">\n';
+                result += '<input' + this.getParams() + 'type="text" placeholder="' + placeholder + '">\n';
                 result += '</div>\n';
                 if (_Templatetor.teplatable(result))
                     result = new _Templatetor().setTemplate(result).render();
@@ -361,6 +416,85 @@ var LateX = null;
     TextInput.prototype = new Element();
     TextInput.prototype.constructor = TextInput;
 
+    DroppableArea =
+        function (n) {
+            if (typeof n === "string")
+                this.setName(n);
+
+            /**
+             * Renders the element
+             * @returns {String} rendered element
+             */
+            this.render = function () {
+                if (this.getName().length == 0)
+                    throw new Error('Please check element\'s name');
+                var result = '<div class="form-group" for="' + this.getName() + '">\n';
+                result += '<div class="droppable-input"' + this.getParams() + '></div>\n';
+                result += '<script>'
+                result += '$(\'div.droppable-input[name="' + this.getName() + '"]\').droppable({drop: function (event, ui) {var parentSelector = ui.draggable.parent().attr(\'name\');ui.draggable.attr(\'data-parent\',parentSelector);ui.draggable.appendTo(\'div.droppable-input[name="' + this.getName() + '"]\');ui.draggable.draggable("disable");ui.draggable.appendTo(\'div.droppable-input[name="' + this.getName() + '"]\').removeAttr(\'style\', \'\');var v = ($(this).attr(\'value\') || \'\');$(this).attr(\'value\', (v + (v.length > 0 ? \',\' : \'\') +ui.draggable.attr(\'value\')));ui.draggable.click(function () {var parent = $(this).closest("div.droppable-input");var answerValue = $(this).attr("value");var parentValue = parent.attr("value");parent.attr("value", parentValue.replace(","+answerValue, "").replace(answerValue+",", "").replace(answerValue,""));$(this).attr(\'style\',\'position:relative\').appendTo(\'div.draggables[name="\'+parentSelector+\'"]\').draggable("enable").unbind(\'click\');});}});';
+                result += '</script>';
+                /*$('div.droppable-input[name="' + this.getName() + '"]').droppable({
+                    drop: function (event, ui) {
+                        var parentSelector = ui.draggable.parent().attr('name');
+                        ui.draggable.attr('data-parent',parentSelector);
+                        ui.draggable.appendTo('div.droppable-input[name="' + this.getName() + '"]');
+                        ui.draggable.draggable("disable");
+                        ui.draggable.appendTo('div.droppable-input[name="' + this.getName() + '"]').removeAttr('style', '');
+                        var v = ($(this).attr('value') || '');
+                        $(this).attr('value', (v + (v.length > 0 ? ',' : '') +ui.draggable.attr('value')));
+                        ui.draggable.click(function () {
+                             var parent = $(this).closest("div.droppable-input");
+                             var answerValue = $(this).attr("value");
+                             var parentValue = parent.attr("value");
+                             parent.attr("value", parentValue.replace(","+answerValue, "").replace(answerValue+",", "").replace(answerValue,""));
+                            $(this).attr('style','position:relative').appendTo('div.draggables[name="'+parentSelector+'"]').draggable("enable").unbind('click');
+                        });
+                    }
+                });*/
+                result += '</div>\n';
+                return result;
+            };
+        };
+    DroppableArea.prototype = new Element();
+    DroppableArea.prototype.constructor = DroppableArea;
+
+    DraggableGroup =
+        function (n) {
+            if (typeof n === "string")
+                this.setName(n);
+            var options = [];
+
+            this.addOption = function (label, value) {
+                if (!label || !value)
+                    throw new IllegalArgumentException("Please check arguments at DraggableGroup!");
+                options.push([label + '', value + '']);
+                return this;
+            };
+
+            /**
+             * Renders the element
+             * @returns {String} rendered element
+             */
+            this.render = function () {
+                if (this.getName().length == 0)
+                    throw new Error('Please check element\'s name');
+                else if (options.length == 0)
+                    throw new Error('Nothing to add into DraggableGroup! Please add some options to DraggableGroup!');
+                var result = '<div class="draggables" name="' + this.getName() + '">\n';
+                for (var i = 0; i < options.length; i++) {
+                    result += '<div class="draggable-value" value="' + options[i][1] + '">';
+                    result += options[i][0];
+                    result += '</div>\n';
+                }
+                result += '<script>'
+                result += '$(\'div.draggables[name="' + this.getName() + '"] div.draggable-value\').draggable({ revert: true });';
+                result += '</script>';
+                result += '</div>\n';
+                return result;
+            };
+        };
+    DraggableGroup.prototype = new Element();
+    DraggableGroup.prototype.constructor = DraggableGroup;
 
     /**
      * This class is a wrapper to WolframAlpha API.

@@ -13,7 +13,8 @@ var elementstest = function () {
     this.postDispatch = function () {
         VElements = new Validator();
         VElements.addValidator($('select[name="test-select"]'), 2)
-            .addValidator($('input[name="test-textinput"]'), ['test','text'],',')
+            .addValidator($('input[name="test-textinput"]'), ['test','text'], true)
+            .addValidator($('div.droppable-input[name="test-droppable"]'), ['1','4'], true)
             .setStrictMode(true);
         $('span.check').click(function () {
             VElements.validate()
@@ -26,6 +27,13 @@ var elementstest = function () {
                 .addOption('{{ELEMENTSTEST_OPTION_ONE}}', 0)
                 .addOption('{{ELEMENTSTEST_OPTION_TWO}}', 1)
                 .addOption('{{ELEMENTSTEST_OPTION_THREE}}', 2)
+                .render(),
+            TEST_DROPPABLE: new DroppableArea('test-droppable').render(),
+            TEST_DRAGGABLE: new DraggableGroup('test-draggable')
+                .addOption('Answer 1', 1)
+                .addOption('Answer 2', 2)
+                .addOption('Answer 3', 3)
+                .addOption('Answer 4', 4)
                 .render(),
             TEST_INPUT: new TextInput('test-textinput')
                 .render(),

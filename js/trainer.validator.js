@@ -51,14 +51,15 @@ var Validator = null;
              * Adds an object to observe by the Validator.
              * @param o {jQuery} wrapped DOM element where to get value to check
              * @param v {Array|*} correct values of element's value. It can be an array of values or only one value;
+             * @param multiple {Boolean} check it, if you want validator to explode your element's value and check separately
              * @returns {Validator} current object (flow)
              */
-            this.addValidator = function (o, v, delimeter) {
+            this.addValidator = function (o, v, multiple) {
                 if (!(o instanceof $))
                     throw new IllegalArgumentException('Object should be an instance of $');
                 if (!$.isArray(v))
                     v = [(v + '').toLowerCase()];
-                targets.push([o, v, delimeter]);
+                targets.push([o, v, !!multiple]);
                 return this;
             };
 
@@ -82,8 +83,8 @@ var Validator = null;
                 for (var i = 0; i < targets.length; i++) {
                     var target = targets[i][0];
 
-                    var currentValue = (target.val() + '').toLowerCase();
-                        currentValue = targets[i][2] ? currentValue.split(targets[i][2]) : [currentValue];
+                    var currentValue = ((target.val() ? target.val() : target.attr("value")) + '').toLowerCase();
+                        currentValue = targets[i][2] ? currentValue.split(',') : [currentValue];
                     var correctValues = targets[i][1];
                     if (!currentValue && isStrict === false) {
                         checkState = false;

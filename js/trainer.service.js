@@ -8,7 +8,7 @@ var Service;
     Service = new
         (function () {
             var CONFIG_FILE = 'trainer/settings/trainer.config.json';
-            var trainerVersion = '1.6 build23012014';
+            var trainerVersion = '1.9 build27022014';
             var trainerSetting = null;
             var reportUrl;
             /**
@@ -39,12 +39,12 @@ var Service;
                     url: CONFIG_FILE,
                     dataType: "JSON"
                 }).done(function (data) {
-                    trainerSetting = data;
-                    if (typeof(callback) === "function")
-                        callback();
-                }).fail(function (jqxhr, settings, exception) {
+                        trainerSetting = data;
+                        if (typeof(callback) === "function")
+                            callback();
+                    }).fail(function (jqxhr, settings, exception) {
                         throw new IllegalAsyncStateException(exception);
-                });
+                    });
             };
 
             /**
@@ -60,12 +60,41 @@ var Service;
             };
 
             /**
+             * Loads external script file and appending it to DOM
+             * @param url src prop of <script> tag
+             * @param callback func
+             */
+            this.appendScript = function (url, callback) {
+                var script = document.createElement("script")
+                script.type = "text/javascript";
+                if (script.readyState) {  //IE
+                    script.onreadystatechange = function () {
+                        if (script.readyState == "loaded" ||
+                            script.readyState == "complete") {
+                            script.onreadystatechange = null;
+                            callback();
+                        }
+                    };
+                } else {  //Others
+                    script.onload = function () {
+                        callback();
+                    };
+                }
+                script.src = url;
+                document.getElementsByTagName("head")[0].appendChild(script);
+            }
+
+            /**
              * About trainer alert
              */
             this.about = function () {
                 alert('jTrainer v' + trainerVersion + '\nSumDU Distance Learning E-Trainer\nAuthor: Ilia Ovchinnikov');
             };
 
+            /**
+             * Sends data about trainer start to SSU server
+             * @param callback func that will be called after notifying
+             */
             this.notifyServer = function (callback) {
                 LOGGER.debug("Notifying server...");
                 var host = window.location.href;
@@ -90,15 +119,19 @@ var Service;
                     }).fail(function (jqxhr, settings, exception) {
                         throw new IllegalAsyncStateException(exception);
                     });
-                return host;
             };
 
+            /**
+             * Pushes user's results to SSU server
+             * @param callback func i'll call when transferring is done
+             */
             this.pushResults = function (callback) {
                 if (!reportUrl)
                     throw new IllegalStateException('Server is not notified yet');
 
                 var uScore = _Scorer.getScore();
-                var uScoreInPercent = (Math.floor(uScore / _Scorer.getTotalScore()) * 100).toFixed(2);;
+                var uScoreInPercent = (Math.floor(uScore / _Scorer.getTotalScore()) * 100).toFixed(2);
+                ;
                 $.post(reportUrl, {
                     total_points: _Scorer.getTotalScore(),
                     user_points: uScore,

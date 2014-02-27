@@ -30,8 +30,9 @@
 
 .has-success .form-control,
 .has-success .checkbox,
-.has-success .radio {
-
+.has-success .radio,
+.has-success .droppable-input {
+    border-color       : #3c763d;
     background         : rgb(219, 255, 219);
     -webkit-box-shadow : inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 3px #67b168;
     box-shadow         : inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 3px #67b168;
@@ -39,7 +40,9 @@
 
 .has-error .form-control,
 .has-error .checkbox,
-.has-error .radio {
+.has-error .radio,
+.has-error .droppable-input {
+    border-color       : #a94442;
     background         : rgb(255, 234, 234);
     -webkit-box-shadow : inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 3px #ce8483;
     box-shadow         : inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 3px #ce8483;
@@ -85,4 +88,54 @@ div.step.current {
 div.latex {
     display : inline-block;
     padding : 3px;
+}
+
+/* DROPABLE */
+div.droppable-input, div.draggable-value {
+    -webkit-touch-callout : none;
+    -webkit-user-select   : none;
+    -khtml-user-select    : none;
+    -moz-user-select      : none;
+    -ms-user-select       : none;
+    user-select           : none;
+}
+
+div.droppable-input {
+    display            : block;
+    width              : 100%;
+    height             : 40px;
+    padding            : 4.4px 4px;
+    margin             : 5px 0;
+    font-size          : 14px;
+    line-height        : 1.428571429;
+    color              : #555555;
+    vertical-align     : middle;
+    background-color   : #ffffff;
+    border             : 1px solid #cccccc;
+    border-radius      : 4px;
+    -webkit-box-shadow : inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow         : inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+div.draggable-value {
+    display          : inline-block;
+    height           : 30px;
+    line-height      : 21px;
+    cursor           : move;
+    margin-right     : 5px;
+    padding          : 3px 12px;
+    font-size        : 14px;
+    border-radius    : 4px;
+    color            : #ffffff;
+    background-color : #428bca;
+    border           : 1px solid #357ebd;
+}
+
+div.draggable-value:hover {
+    background-color : #3276b1;
+    border-color     : #285e8e;
+}
+
+div.droppable-input div.draggable-value {
+    cursor : not-allowed;
 }
