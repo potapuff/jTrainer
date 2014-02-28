@@ -175,10 +175,20 @@ function Element() {
      * @returns {Element} current object {flow)
     */
     this.removeClass = function (c) {
-        delete this.classes[c];
-        this.classes.length--;
+        this.classes = $.grep(this.classes, function(value) {
+            return value != c;
+        });
         return this;
     };
+
+    /**
+     * Clears all classes of element
+     * @returns {Element} current object {flow)
+     */
+    this.clearClasses = function () {
+        this.classes = [];
+        return this;
+    }
 }
 
 var Select = null;
@@ -428,29 +438,12 @@ var LateX = null;
             this.render = function () {
                 if (this.getName().length == 0)
                     throw new Error('Please check element\'s name');
+                this.removeClass('form-control').addClass('droppable');
                 var result = '<div class="form-group" for="' + this.getName() + '">\n';
-                result += '<div class="droppable-input"' + this.getParams() + '></div>\n';
+                result += '<div' + this.getParams() + '></div>\n';
                 result += '<script>'
-                result += '$(\'div.droppable-input[name="' + this.getName() + '"]\').droppable({drop: function (event, ui) {var parentSelector = ui.draggable.parent().attr(\'name\');ui.draggable.attr(\'data-parent\',parentSelector);ui.draggable.appendTo(\'div.droppable-input[name="' + this.getName() + '"]\');ui.draggable.draggable("disable");ui.draggable.appendTo(\'div.droppable-input[name="' + this.getName() + '"]\').removeAttr(\'style\', \'\');var v = ($(this).attr(\'value\') || \'\');$(this).attr(\'value\', (v + (v.length > 0 ? \',\' : \'\') +ui.draggable.attr(\'value\')));ui.draggable.click(function () {var parent = $(this).closest("div.droppable-input");var answerValue = $(this).attr("value");var parentValue = parent.attr("value");parent.attr("value", parentValue.replace(","+answerValue, "").replace(answerValue+",", "").replace(answerValue,""));$(this).attr(\'style\',\'position:relative\').appendTo(\'div.draggables[name="\'+parentSelector+\'"]\').draggable("enable").unbind(\'click\');});}});';
+                result += '$(\'div.droppable[name="' + this.getName() + '"]\').droppable({drop: function (event, ui) {var parentSelector = ui.draggable.parent().attr(\'name\');ui.draggable.attr(\'data-parent\',parentSelector);ui.draggable.appendTo(\'div.droppable[name="' + this.getName() + '"]\');ui.draggable.draggable("disable");ui.draggable.appendTo(\'div.droppable[name="' + this.getName() + '"]\').removeAttr(\'style\', \'\');var v = ($(this).attr(\'value\') || \'\');$(this).attr(\'value\', (v + (v.length > 0 ? \',\' : \'\') +ui.draggable.attr(\'value\')));ui.draggable.click(function () {var parent = $(this).closest("div.droppable");var answerValue = $(this).attr("value");var parentValue = parent.attr("value");parent.attr("value", parentValue.replace(","+answerValue, "").replace(answerValue+",", "").replace(answerValue,""));$(this).attr(\'style\',\'position:relative\').appendTo(\'div.draggables[name="\'+parentSelector+\'"]\').draggable("enable").unbind(\'click\');});}});';
                 result += '</script>';
-                /*$('div.droppable-input[name="' + this.getName() + '"]').droppable({
-                    drop: function (event, ui) {
-                        var parentSelector = ui.draggable.parent().attr('name');
-                        ui.draggable.attr('data-parent',parentSelector);
-                        ui.draggable.appendTo('div.droppable-input[name="' + this.getName() + '"]');
-                        ui.draggable.draggable("disable");
-                        ui.draggable.appendTo('div.droppable-input[name="' + this.getName() + '"]').removeAttr('style', '');
-                        var v = ($(this).attr('value') || '');
-                        $(this).attr('value', (v + (v.length > 0 ? ',' : '') +ui.draggable.attr('value')));
-                        ui.draggable.click(function () {
-                             var parent = $(this).closest("div.droppable-input");
-                             var answerValue = $(this).attr("value");
-                             var parentValue = parent.attr("value");
-                             parent.attr("value", parentValue.replace(","+answerValue, "").replace(answerValue+",", "").replace(answerValue,""));
-                            $(this).attr('style','position:relative').appendTo('div.draggables[name="'+parentSelector+'"]').draggable("enable").unbind('click');
-                        });
-                    }
-                });*/
                 result += '</div>\n';
                 return result;
             };
@@ -480,14 +473,16 @@ var LateX = null;
                     throw new Error('Please check element\'s name');
                 else if (options.length == 0)
                     throw new Error('Nothing to add into DraggableGroup! Please add some options to DraggableGroup!');
+
+                this.removeClass('form-control');
                 var result = '<div class="draggables" name="' + this.getName() + '">\n';
                 for (var i = 0; i < options.length; i++) {
-                    result += '<div class="draggable-value" value="' + options[i][1] + '">';
+                    result += '<div class="draggable ' + this.getClasses().join(" ") + '" value="' + options[i][1] + '">';
                     result += options[i][0];
                     result += '</div>\n';
                 }
                 result += '<script>'
-                result += '$(\'div.draggables[name="' + this.getName() + '"] div.draggable-value\').draggable({ revert: true });';
+                result += '$(\'div.draggables[name="' + this.getName() + '"] div.draggable\').draggable({ revert: true });';
                 result += '</script>';
                 result += '</div>\n';
                 return result;

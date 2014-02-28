@@ -8,7 +8,7 @@ var Service;
     Service = new
         (function () {
             var CONFIG_FILE = 'trainer/settings/trainer.config.json';
-            var trainerVersion = '1.9 build27022014';
+            var trainerVersion = '1.9 build28022014';
             var trainerSetting = null;
             var reportUrl;
             /**
