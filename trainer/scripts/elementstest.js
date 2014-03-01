@@ -14,7 +14,7 @@ var elementstest = function () {
         VElements = new Validator();
         VElements.addValidator($('select[name="test-select"]'), 2)
             .addValidator($('input[name="test-textinput"]'), ['test', 'text'], true)
-            .addValidator($('div.droppable-input[name="test-droppable"]'), ['1', '4'], true)
+            .addValidator($('div.droppable[name="test-droppable"]'), ['1', '4'], true)
             .setStrictMode(true);
         $('span.check').click(function () {
             VElements.validate()

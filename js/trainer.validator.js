@@ -57,6 +57,8 @@ var Validator = null;
             this.addValidator = function (o, v, multiple) {
                 if (!(o instanceof $))
                     throw new IllegalArgumentException('Object should be an instance of $');
+                else if (o.length == 0)
+                    throw new IllegalArgumentException('DOM Element ' + o.selector + " does't exists. Validator not added");
                 if (!$.isArray(v))
                     v = [(v + '').toLowerCase()];
                 targets.push([o, v, !!multiple]);
