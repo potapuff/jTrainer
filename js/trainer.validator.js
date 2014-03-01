@@ -22,6 +22,7 @@ var Validator = null;
 
             var isStrict = false;
             var attempts = 3;
+            var ignoreCase = true;
 
             /**
              * Sets a strict mode for Validator
@@ -32,6 +33,18 @@ var Validator = null;
                 if (typeof b !== "boolean")
                     throw new IllegalArgumentException("Mode switch should be boolean");
                 isStrict = b;
+                return this;
+            };
+
+            /**
+             * Switch for case sensitivity of validator
+             * @param b {Boolean} sensitivity mode switch
+             * @returns {Validator} current object (flow)
+             */
+            this.setIgnoreCase = function (b) {
+                if (typeof b !== "boolean")
+                    throw new IllegalArgumentException("Case sensitivity switch should be boolean");
+                ignoreCase = b;
                 return this;
             };
 
@@ -59,8 +72,14 @@ var Validator = null;
                     throw new IllegalArgumentException('Object should be an instance of $');
                 else if (o.length == 0)
                     throw new IllegalArgumentException('DOM Element ' + o.selector + " does't exists. Validator not added");
-                if (!$.isArray(v))
-                    v = [(v + '').toLowerCase()];
+                if (!$.isArray(v)) {
+                    v = v + '';
+                    if (ignoreCase)
+                        v = v.toLowerCase();
+                    v = [v];
+                } else if (ignoreCase)
+                    for (var i in v)
+                        v[i] = (v[i] + '').toLowerCase();
                 targets.push([o, v, !!multiple]);
                 return this;
             };
@@ -85,7 +104,8 @@ var Validator = null;
                 for (var i = 0; i < targets.length; i++) {
                     var target = targets[i][0];
 
-                    var currentValue = ((target.val() ? target.val() : target.attr("value")) + '').toLowerCase();
+                    var currentValue = (target.val() ? target.val() : target.attr("value")) + '';
+                    if (ignoreCase) currentValue = currentValue.toLowerCase();
                         currentValue = targets[i][2] ? currentValue.split(',') : [currentValue];
                     var correctValues = targets[i][1];
                     if (!currentValue && isStrict === false) {

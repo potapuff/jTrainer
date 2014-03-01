@@ -16,7 +16,7 @@
         "ELEMENTSTEST_OPTION_THREE": "Элемент 3 (правильный)",
         "ELEMENTSTEST_TITLE": "Проверка некоторых элементов...",
         "ELEMENTSTEST_CHOOSE_WRITE_OPTION": "Выберите правильный элемент из списка",
-        "ELEMENTSTEST_ENTER_TEST": "Введите в поле текст 'test' и 'text' через запятую",
+        "ELEMENTSTEST_ENTER_TEST": "Введите в поле текст 'test' и 'Text' через запятую",
         "ELEMENTSTEST_PUT_DROPPABLE": "Перетащите ответы 1 и 4",
 
         "RESULTS_TITLE": "Ваши результаты",

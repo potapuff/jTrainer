@@ -16,7 +16,7 @@
         "ELEMENTSTEST_OPTION_THREE": "Element 3 (right)",
         "ELEMENTSTEST_TITLE": "Some elements test...",
         "ELEMENTSTEST_CHOOSE_WRITE_OPTION": "Choose right element from the list",
-        "ELEMENTSTEST_ENTER_TEST": "Enter 'test' and 'text' separated by comma into a text input",
+        "ELEMENTSTEST_ENTER_TEST": "Enter 'test' and 'Text' separated by comma into a text input",
         "ELEMENTSTEST_PUT_DROPPABLE": "Drag answers #1 and #4 into droppable area",
 
         "RESULTS_TITLE": "Your scores",
