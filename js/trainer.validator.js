@@ -68,18 +68,18 @@ var Validator = null;
              * @returns {Validator} current object (flow)
              */
             this.addValidator = function (o, v, multiple) {
+                LOGGER.debug('VALIDATOR ADDED:', o, v, multiple);
                 if (!(o instanceof $))
                     throw new IllegalArgumentException('Object should be an instance of $');
                 else if (o.length == 0)
                     throw new IllegalArgumentException('DOM Element ' + o.selector + " does't exists. Validator not added");
+
                 if (!$.isArray(v)) {
-                    v = v + '';
-                    if (ignoreCase)
-                        v = v.toLowerCase();
-                    v = [v];
-                } else if (ignoreCase)
+                    v = [v + ''];
+                } else {
                     for (var i in v)
-                        v[i] = (v[i] + '').toLowerCase();
+                        v[i] = v[i] + '';
+                }
                 targets.push([o, v, !!multiple]);
                 return this;
             };
@@ -105,9 +105,14 @@ var Validator = null;
                     var target = targets[i][0];
 
                     var currentValue = (target.val() ? target.val() : target.attr("value")) + '';
-                    if (ignoreCase) currentValue = currentValue.toLowerCase();
-                        currentValue = targets[i][2] ? currentValue.split(',') : [currentValue];
                     var correctValues = targets[i][1];
+                    if (ignoreCase) {
+                        currentValue = currentValue.toLowerCase();
+                        for (var i in correctValues)
+                            correctValues[i] = correctValues[i].toLowerCase();
+                    }
+                    currentValue = targets[i][2] ? currentValue.split(',') : [currentValue];
+
                     if (!currentValue && isStrict === false) {
                         checkState = false;
                         continue;

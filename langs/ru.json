@@ -9,6 +9,7 @@
         "PREV_STEP": "Пред. шаг",
         "ENTER_TEXT": "Введите текст",
         "CHOOSE_LANG": "Выберите язык",
+        "CHECK": "Проверить",
         "CHOOSE_SELECT": "Выберите элемент из списка",
 
         "ELEMENTSTEST_OPTION_ONE": "Элемент 1",
@@ -25,7 +26,7 @@
         "RESULTS_TIME_DIFF": "Время выполнения",
         "RESULTS_TIME_SEC": "сек.",
         "RESULTS_YOUR_SCORE": "Вы набрали",
-        "RESULTS_POINTS": "очков"
+        "RESULTS_POINTS": "балов"
 
     }
 }

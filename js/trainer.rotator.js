@@ -1,6 +1,6 @@
 var Rotator = null;
 
-(function ($, Log, Tpl, _Scorer, _Service, _Cogwheel) {
+(function ($, Log, Tpl, _Scorer, _Service, _StepInvoker, _Cogwheel) {
     /**
      * Rotator is one of the main object of trainer that is responsible for the rotation
      * of steps
@@ -337,7 +337,11 @@ var Rotator = null;
                 LOGGER.debug("LAST: " + lastLoadedStep + "; NEXT: " + next);
                 if (next > lastLoadedStep) {
                     loadStep(next, function () {
-                        fadeStepIn(next, callback);
+                        fadeStepIn(next, function () {
+                            _StepInvoker.invoke();
+                            if (typeof callback == "function")
+                                callback();
+                        });
                     });
                 } else {
                     fadeStepIn(next, callback);
@@ -391,4 +395,4 @@ var Rotator = null;
                 });
             };
         });
-})(jQuery, Logger, Templatetor, Scorer, Service, Cogwheel);
+})(jQuery, Logger, Templatetor, Scorer, Service, StepInvoker, Cogwheel);

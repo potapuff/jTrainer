@@ -17,8 +17,8 @@ var elementstest = function () {
             .addValidator($('div.droppable[name="test-droppable"]'), ['1', '4'], true)
             .setStrictMode(true)
             .setIgnoreCase(false);
-        $('span.check').click(function () {
-            validator.validate()
+        $('#validatorInvoker').click(function () {
+            validator.validate();
         });
     }
 

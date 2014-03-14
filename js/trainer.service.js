@@ -1,4 +1,5 @@
 var Service;
+var ScriptInvoker;
 
 (function ($, _Scorer, _Logger) {
     /**
@@ -150,6 +151,142 @@ var Service;
             };
         });
 })(jQuery, Scorer, Logger);
+
+(function ($, _Logger) {
+
+    /**
+     * This is a class to invoke functions by string including ability to
+     * execute function from .js source file
+     */
+    ScriptInvoker = function () {
+        var LOGGER = new _Logger();
+        var clean = true;
+
+        var sources = [];
+        var loadedSources = [];
+        var commands = [];
+
+        /**
+         * Auto clean invoker stack switch
+         * @param b auto clean if true, otherwise saves stack values
+         * @returns {ScriptInvoker} current object (flow)
+         */
+        this.autoClean = function(b) {
+            clean = !!b;
+            return this;
+        };
+
+        /**
+         * Adds a source file to execute function from
+         * @param src path to js file
+         * @returns {ScriptInvoker} current object (flow)
+         */
+        this.addSource = function (src) {
+            src = src + '';
+            if (src.indexOf('.js') < 0)
+                throw new IllegalArgumentException("Source must be a file with *.js extension");
+            sources.push(src);
+            return this;
+        };
+
+        /**
+         * Adds a function and it's arguments to invoke
+         * @param funct function name
+         * @param args arguments of function
+         * @returns {ScriptInvoker} current object (flow)
+         */
+        this.addCommand = function (funct, args) {
+            commands.push([funct, $.makeArray(args)]);
+            return this;
+        };
+
+        /**
+         * Loads scripts from 'scripts' array
+         * @param callback funct to call after loading
+         * @param i pointer to current scr
+         */
+        var loadScripts = function (callback, i) {
+            i = i || 0;
+            if (sources.length == 0) {
+                if (typeof callback == "function")
+                    callback();
+                return;
+            }
+
+            if ($.inArray(sources[i], loadedSources) >= 0) {
+                if (i + 1 >= sources.length) {
+                    if (typeof callback == "function")
+                        callback();
+                    return;
+                }
+                loadScripts(callback, ++i);
+            }
+
+            $.getScript(sources[i])
+                .done(function () {
+                    LOGGER.debug("Script from " + sources[i] + " loaded successfully");
+                    loadedSources.push(sources[i]);
+                    if (i >= (sources.length - 1)) {
+                        if (typeof callback == "function")
+                            callback();
+                    } else {
+                        loadScripts(callback, ++i);
+                    }
+                }).fail(function (jqxhr, settings, exception) {
+                    LOGGER.error("Failed to load data from source: " + sources[i]);
+                });
+        };
+
+        /**
+         * Starts to invoking commands
+         */
+        this.invoke = function () {
+            var cmd, f, gf, args;
+
+            LOGGER.debug("Loading scripts from sources:", sources);
+            var self = this;
+            loadScripts(function () {
+                LOGGER.debug('Invoking commands:', commands);
+                for (var i in commands) {
+                    cmd = commands[i];
+                    f = cmd[0], args = cmd[1];
+
+                    if (typeof f == "function")
+                        f.apply(null, args);
+                    else {
+                        gf = window[(f + '')];
+                        LOGGER.debug("Calling", f, gf);
+                        if (gf)
+                            gf.apply(null, args);
+                        else
+                            LOGGER.error("Tried to invoke not existing function " + f);
+                    }
+                }
+                if (clean)
+                    self.clear();
+            });
+        };
+
+        /**
+         * Clears sources and commands stacks
+         * @returns {ScriptInvoker} current object (flow)
+         */
+        this.clear = function() {
+            sources.length = 0;
+            commands.length = 0;
+            return this;
+        }
+    };
+})(jQuery, Logger);
+
+/**
+ * This is an instance of ScriptInvoker used by engine, especially by rotator.
+ * Rotator invokes all commands of StepInvoker after calling nextStep()
+ *
+ * Used for executing necessary scripts for elements etc
+ * @type {ScriptInvoker}
+ */
+var StepInvoker = new ScriptInvoker();
 
 function IllegalArgumentException(message) {
     this.name = 'IllegalArgumentException';

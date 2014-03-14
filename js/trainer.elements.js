@@ -203,7 +203,7 @@ var DroppableArea = null;
 var WolframAlpha = null;
 var LateX = null;
 
-(function ($, _Templatetor) {
+(function ($, _Templatetor, _StepInvoker) {
     Radio = function (n) {
         if (typeof n === "string")
             this.setName(n);
@@ -441,10 +441,8 @@ var LateX = null;
                 this.removeClass('form-control').addClass('droppable');
                 var result = '<div class="form-group" for="' + this.getName() + '">\n';
                 result += '<div' + this.getParams() + '></div>\n';
-                result += '<script>'
-                result += '$(\'div.droppable[name="' + this.getName() + '"]\').droppable({drop: function (event, ui) {var parentSelector = ui.draggable.parent().attr(\'name\');ui.draggable.attr(\'data-parent\',parentSelector);ui.draggable.appendTo(\'div.droppable[name="' + this.getName() + '"]\');ui.draggable.draggable("disable");ui.draggable.appendTo(\'div.droppable[name="' + this.getName() + '"]\').removeAttr(\'style\', \'\');var v = ($(this).attr(\'value\') || \'\');$(this).attr(\'value\', (v + (v.length > 0 ? \',\' : \'\') +ui.draggable.attr(\'value\')));ui.draggable.click(function () {var parent = $(this).closest("div.droppable");var answerValue = $(this).attr("value");var parentValue = parent.attr("value");parent.attr("value", parentValue.replace(","+answerValue, "").replace(answerValue+",", "").replace(answerValue,""));$(this).attr(\'style\',\'position:relative\').appendTo(\'div.draggables[name="\'+parentSelector+\'"]\').draggable("enable").unbind(\'click\');});}});';
-                result += '</script>';
                 result += '</div>\n';
+                _StepInvoker.addSource('js/additions/drag-drops.js').addCommand('makeDroppable', this.getName());
                 return result;
             };
         };
@@ -481,10 +479,8 @@ var LateX = null;
                     result += options[i][0];
                     result += '</div>\n';
                 }
-                result += '<script>'
-                result += '$(\'div.draggables[name="' + this.getName() + '"] div.draggable\').draggable({ revert: true });';
-                result += '</script>';
                 result += '</div>\n';
+                _StepInvoker.addSource('js/additions/drag-drops.js').addCommand('makeDraggable', this.getName());
                 return result;
             };
         };
@@ -579,4 +575,4 @@ var LateX = null;
                 return '<img class="latex" src="http://latex.codecogs.com/svg.latex?' + formula + '" border="0"/>';
             };
         };
-})(jQuery, Templatetor);
+})(jQuery, Templatetor, StepInvoker);
