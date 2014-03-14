@@ -1,5 +1,5 @@
-var VElements;
 var elementstest = function () {
+    var validator = null;
     var plot = null;
 
     this.preDispatch = function (callback) {
@@ -11,14 +11,14 @@ var elementstest = function () {
     }
 
     this.postDispatch = function () {
-        VElements = new Validator();
-        VElements.addValidator($('select[name="test-select"]'), 2)
+        validator = new Validator();
+        validator.addValidator($('select[name="test-select"]'), 2)
             .addValidator($('input[name="test-textinput"]'), ['test', 'Text'], true)
             .addValidator($('div.droppable[name="test-droppable"]'), ['1', '4'], true)
             .setStrictMode(true)
             .setIgnoreCase(false);
         $('span.check').click(function () {
-            VElements.validate()
+            validator.validate()
         });
     }
 

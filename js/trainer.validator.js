@@ -122,7 +122,7 @@ var Validator = null;
                                 isValid = false;
                         }
                     }
-                    LOGGER.error(target, target.prev());
+                    LOGGER.debug(target, target.prev());
                     if (isValid) {
                         LOGGER.debug('Target is good', target, 'target.val =' + currentValue, 'correctValues:', correctValues);
                         $('* [for="' + target.attr('name') + '"]').removeClass('has-error').addClass('has-success');

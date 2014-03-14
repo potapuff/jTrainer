@@ -1,16 +1,18 @@
 var Service;
 
-(function ($, _Scorer) {
+(function ($, _Scorer, _Logger) {
     /**
      * This object contains some service methods
      * @instance
      */
     Service = new
         (function () {
+            var LOGGER = new _Logger();
             var CONFIG_FILE = 'trainer/settings/trainer.config.json';
             var trainerVersion = '1.9 build28022014';
             var trainerSetting = null;
             var reportUrl;
+
             /**
              * Sets trainer's config file path
              * @param p {String} path to trainer's config file
@@ -147,7 +149,7 @@ var Service;
                     });
             };
         });
-})(jQuery, Scorer);
+})(jQuery, Scorer, Logger);
 
 function IllegalArgumentException(message) {
     this.name = 'IllegalArgumentException';

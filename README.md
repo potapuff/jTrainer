@@ -9,8 +9,10 @@ jTrainer is in a beta stage now and is under active development.
 jTrainer uses
 ========
 
-* JS Only
+* Bootstrap
+* JavaScript
 * jQuery
+* jQuery UI Cherry-picks
 * mustache.js
 
 Demo

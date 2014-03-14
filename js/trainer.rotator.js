@@ -1,6 +1,6 @@
 var Rotator = null;
 
-(function ($, Log, Tpl, _Scorer, _Cogwheel) {
+(function ($, Log, Tpl, _Scorer, _Service, _Cogwheel) {
     /**
      * Rotator is one of the main object of trainer that is responsible for the rotation
      * of steps
@@ -159,14 +159,14 @@ var Rotator = null;
                     url: SETTINGS_PATH,
                     dataType: "JSON"
                 }).done(function (data) {
-                    LOGGER.info('Settings data loaded...');
-                    settings = data;
-                    LOGGER.debug(settings);
-                    if (typeof(callback) === "function")
-                        callback();
-                }).fail(function (jqxhr, settings, exception) {
-                    throw new IllegalAsyncStateException(exception);
-                });
+                        LOGGER.info('Settings data loaded...');
+                        settings = data;
+                        LOGGER.debug(settings);
+                        if (typeof(callback) === "function")
+                            callback();
+                    }).fail(function (jqxhr, settings, exception) {
+                        throw new IllegalAsyncStateException(exception);
+                    });
             };
 
             /**
@@ -259,6 +259,8 @@ var Rotator = null;
                         LOGGER.debug(scriptInstance);
                         if (scriptInstance && typeof scriptInstance.postDispatch === "function")
                             scriptInstance.postDispatch();
+                        if (PRODUCTION && step >= settings.length)
+                            _Service.pushResults();
                         if (typeof(callback) === "function")
                             callback(data, scriptInstance);
                     });
@@ -389,4 +391,4 @@ var Rotator = null;
                 });
             };
         });
-})(jQuery, Logger, Templatetor, Scorer, Cogwheel);
+})(jQuery, Logger, Templatetor, Scorer, Service, Cogwheel);

@@ -7,11 +7,13 @@ $(document).ready(function () {
     Cogwheel.setText('Loading trainer settings');
     Service.loadConfig(function () {
         var config = Service.getTrainerConfig();
-        if (config['STAGE'] == 'development') {
+        window.PRODUCTION = config['PRODUCTION'];
+
+        if (PRODUCTION === true) {
+            Logger.production();
+        } else{
             $.ajaxSetup({cache: false});
             Logger.debugging();
-        } else if (config['STAGE'] == 'production') {
-            Logger.production();
         }
 
         Cogwheel.setText('Setting up step rotator');
@@ -40,10 +42,13 @@ $(document).ready(function () {
             Rotator.init(function () {
                 Scorer.start();
                 Cogwheel.setText('Notifying server');
-                Cogwheel.hide();
-                /*Service.notifyServer(function() {
+                if (!PRODUCTION)
                     Cogwheel.hide();
-                })*/
+                else {
+                    Service.notifyServer(function() {
+                        Cogwheel.hide();
+                    })
+                }
             });
         });
     });

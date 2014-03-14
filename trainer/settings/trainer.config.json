@@ -5,5 +5,5 @@
     },
     "DEFAULT_LANG": "ru",
     "TRAINER_SCORE": 15,
-    "STAGE": "development"
+    "PRODUCTION": false
 }
