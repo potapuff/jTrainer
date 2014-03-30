@@ -4,6 +4,8 @@ var results = function () {
     }
 
     this.postDispatch = function () {
+        if (PRODUCTION)
+            Service.pushResults();
     }
 
     this.mustache = function () {
