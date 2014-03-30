@@ -108,8 +108,8 @@ var Validator = null;
                     var correctValues = targets[i][1];
                     if (ignoreCase) {
                         currentValue = currentValue.toLowerCase();
-                        for (var i in correctValues)
-                            correctValues[i] = correctValues[i].toLowerCase();
+                        for (var k in correctValues)
+                            correctValues[k] = correctValues[k].toLowerCase();
                     }
                     currentValue = targets[i][2] ? currentValue.split(',') : [currentValue];
 

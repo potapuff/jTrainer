@@ -442,6 +442,8 @@ var LateX = null;
                 var result = '<div class="form-group" for="' + this.getName() + '">\n';
                 result += '<div' + this.getParams() + '></div>\n';
                 result += '</div>\n';
+                if (_Templatetor.teplatable(result))
+                    result = new _Templatetor().setTemplate(result).render();
                 _StepInvoker.addSource('js/additions/drag-drops.js').addCommand('makeDroppable', this.getName());
                 return result;
             };
@@ -480,6 +482,8 @@ var LateX = null;
                     result += '</div>\n';
                 }
                 result += '</div>\n';
+                if (_Templatetor.teplatable(result))
+                    result = new _Templatetor().setTemplate(result).render();
                 _StepInvoker.addSource('js/additions/drag-drops.js').addCommand('makeDraggable', this.getName());
                 return result;
             };
