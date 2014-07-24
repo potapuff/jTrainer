@@ -74,6 +74,8 @@ var Validator = null;
                 else if (o.length == 0)
                     throw new IllegalArgumentException('DOM Element ' + o.selector + " does't exists. Validator not added");
 
+                if (typeof(v) === 'function'){}
+                else
                 if (!$.isArray(v)) {
                     v = [v + ''];
                 } else {
@@ -106,26 +108,33 @@ var Validator = null;
 
                     var currentValue = (target.val() ? target.val() : target.attr("value")) + '';
                     var correctValues = targets[i][1];
-                    if (ignoreCase) {
-                        currentValue = currentValue.toLowerCase();
-                        for (var k in correctValues)
-                            correctValues[k] = correctValues[k].toLowerCase();
-                    }
-                    currentValue = targets[i][2] ? currentValue.split(',') : [currentValue];
-
-                    if (!currentValue && isStrict === false) {
-                        checkState = false;
-                        continue;
-                    }
-                    LOGGER.debug("# VALIDATING TARGET <" + target.selector + ">:", "Current value:", currentValue, "Correct values:", correctValues);
                     var isValid = true;
-                    if (currentValue.length != correctValues.length)
-                        isValid = false;
+                    if (typeof(correctValues) === 'function'){
+                        LOGGER.debug("# VALIDATING TARGET WITH FUNCTION <" + target.selector + ">:", "Current value:", currentValue);
+                        isValid = correctValues(currentValue);
+                    }
                     else {
-                        for (var j = 0; j < currentValue.length; j++) {
-                            if ($.inArray(currentValue[j], correctValues) == -1)
-                                isValid = false;
+                        if (ignoreCase) {
+                            currentValue = currentValue.toLowerCase();
+                            for (var k in correctValues)
+                                correctValues[k] = correctValues[k].toLowerCase();
                         }
+                        currentValue = targets[i][2] ? currentValue.split(',') : [currentValue];
+
+                        if (!currentValue && isStrict === false) {
+                             checkState = false;
+                             continue;
+                        }
+                        LOGGER.debug("# VALIDATING TARGET <" + target.selector + ">:", "Current value:", currentValue, "Correct values:", correctValues);
+
+                        if (currentValue.length != correctValues.length)
+                            isValid = false;
+                        else {
+                            for (var j = 0; j < currentValue.length; j++) {
+                                if ($.inArray(currentValue[j], correctValues) == -1)
+                                    isValid = false;
+                                }
+                            }
                     }
                     LOGGER.debug(target, target.prev());
                     if (isValid) {

@@ -14,7 +14,7 @@ var elementstest = function () {
         validator = new Validator();
         validator.addValidator($('select[name="test-select"]'), 2)
             .addValidator($('input[name="test-textinput"]'), ['test', 'Text'], true)
-            .addValidator($('div.droppable[name="test-droppable"]'), ['1', '4'], true)
+            .addValidator($('div.droppable[name="test-droppable"]'), function(n) { return n === '1,4' || n === '4,1'}, true) // Validate value with function
             .setStrictMode(true)
             .setIgnoreCase(false);
         $('#validatorInvoker').click(function () {
