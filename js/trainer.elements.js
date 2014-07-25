@@ -196,6 +196,7 @@ var CheckBox = null;
 var Radio = null;
 var Radios = null;
 var TextInput = null;
+var TextArea = null;
 
 var DraggableGroup = null;
 var DroppableArea = null;
@@ -425,6 +426,36 @@ var LateX = null;
         };
     TextInput.prototype = new Element();
     TextInput.prototype.constructor = TextInput;
+
+    /**
+     * This class in a wrapper to html text area input.
+     * @param n {String} input's name
+     * @constructor
+     */
+    TextArea =
+        function (n) {
+            TextInput.call(this, n)
+
+            var placeholder = '{{ENTER_TEXT}}';
+
+            this.render = function () {
+                if (!this.getName())
+                    throw new Error('Please check element\'s name. It\'s empty.');
+                var result = '<div class="form-group" for="' + this.getName() + '">\n';
+                result += '<textarea' + this.getParams() + ' placeholder="' + placeholder + '">';
+                if (this.value){
+                  result += this.value.toString().escapeHTML();
+                }
+                result +='</textarea>\n';
+                result += '</div>\n';
+                if (_Templatetor.teplatable(result))
+                    result = new _Templatetor().setTemplate(result).render();
+                return result;
+            };
+        };
+
+    TextArea.prototype = new TextInput();
+    TextArea.prototype.constructor = TextArea;
 
     DroppableArea =
         function (n) {

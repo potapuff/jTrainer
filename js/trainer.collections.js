@@ -1,3 +1,10 @@
+String.prototype.escapeHTML = function(){
+    return document.createElement('div')
+        .appendChild(document.createTextNode(this))
+        .parentNode
+        .innerHTML
+}
+
 var Map = function () {
     var db = [];
 
