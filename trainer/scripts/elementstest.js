@@ -14,6 +14,7 @@ var elementstest = function () {
         validator = new Validator();
         validator.addValidator($('select[name="test-select"]'), 2)
             .addValidator($('input[name="test-textinput"]'), ['test', 'Text'], true)
+            .addValidator($('textarea[name="test-textarea"]'), ['test'], true)
             .addValidator($('div.droppable[name="test-droppable"]'), function(n) { return n === '1,4' || n === '4,1'}, true) // Validate value with function
             .setStrictMode(true)
             .setIgnoreCase(false);
@@ -40,6 +41,8 @@ var elementstest = function () {
                 .addOption('Answer 4', 4)
                 .render(),
             TEST_INPUT: new TextInput('test-textinput')
+                .render(),
+            AREA_INPUT: new TextArea('test-textarea')
                 .render(),
             PLOT: plot
         }
