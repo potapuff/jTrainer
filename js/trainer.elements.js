@@ -64,6 +64,9 @@ function Element() {
      * @returns {String} element's value
      */
     this.getValue = function () {
+        if (this.value) {
+          return this.value.toString();
+        }
         return this.value;
     };
 
