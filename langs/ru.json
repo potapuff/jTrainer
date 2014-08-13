@@ -19,7 +19,8 @@
         "ELEMENTSTEST_CHOOSE_WRITE_OPTION": "Выберите правильный элемент из списка",
         "ELEMENTSTEST_ENTER_TEST": "Введите в поле текст 'test' и 'Text' через запятую",
         "ELEMENTSTEST_ENTER_TEXT": "Введите в поле текст 'test'",
-        "ELEMENTSTEST_PUT_DROPPABLE": "Перетащите ответы 1 и 4",
+        "ELEMENTSTEST_PUT_DROPPABLE_GREEN": "Перетащите ответы 1 и 4. (В это поле можно перетащить любые элементы)",
+        "ELEMENTSTEST_PUT_DROPPABLE_RED": "В это поле можно пертащить только красные элементы",
 
         "RESULTS_TITLE": "Ваши результаты",
         "RESULTS_START_TIME": "Время начала тестирования",

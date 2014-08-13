@@ -480,8 +480,28 @@ var LateX = null;
 
             Element.call(this);
 
+            var accept_list = [];
+
             if (typeof n === "string")
                 this.setName(n);
+            /**
+             * Apend list of selectors for elements, which can be placed to dropable area. By default all elements are accepted.
+             * @returns this
+             */
+            this.addAcceptable = function(accept_class){
+                if (typeof accept_class !== "string")
+                    throw new IllegalArgumentException("Class should be a string");
+                accept_list.push(accept_class);
+                return this;
+            }
+
+            /**
+             * Return selectors for accepatable elements.
+             * @returns {String} rendered element
+             */
+            this.getAcceptable = function(){
+               return (accept_list.length < 1) ? ['*'] : accept_list;
+            }
 
             /**
              * Renders the element
@@ -496,7 +516,7 @@ var LateX = null;
                 result += '</div>\n';
                 if (_Templatetor.teplatable(result))
                     result = new _Templatetor().setTemplate(result).render();
-                _StepInvoker.addSource('js/additions/drag-drops.js').addCommand('makeDroppable', this.getName());
+                _StepInvoker.addSource('js/additions/drag-drops.js').addCommand('makeDroppable', [this.getName(), this.getAcceptable()]);
                 return result;
             };
         };

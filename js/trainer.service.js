@@ -250,7 +250,6 @@ var ScriptInvoker;
                 for (var i in commands) {
                     cmd = commands[i];
                     f = cmd[0], args = cmd[1];
-
                     if (typeof f == "function")
                         f.apply(null, args);
                     else {

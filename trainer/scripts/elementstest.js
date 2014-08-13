@@ -35,10 +35,23 @@ var elementstest = function () {
                 .render(),
             TEST_DRAGGABLE: new DraggableGroup('test-draggable')
                 .addClass('value')
+                .addClass('green')
                 .addOption('Answer 1', 1)
                 .addOption('Answer 2', 2)
                 .addOption('Answer 3', 3)
                 .addOption('Answer 4', 4)
+                .render(),
+            TEST_DROPPABLE1: new DroppableArea('test-droppable1')
+                .addClass('input')
+                .addAcceptable('.red')
+                .render(),
+            TEST_DRAGGABLE1: new DraggableGroup('test-draggable1')
+                .addClass('value')
+                .addClass('red')
+                .addOption('Answer 5', 1)
+                .addOption('Answer 6', 2)
+                .addOption('Answer 7', 3)
+                .addOption('Answer 8', 4)
                 .render(),
             TEST_INPUT: new TextInput('test-textinput')
                 .render(),

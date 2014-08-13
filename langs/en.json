@@ -19,7 +19,8 @@
         "ELEMENTSTEST_CHOOSE_WRITE_OPTION": "Choose right element from the list",
         "ELEMENTSTEST_ENTER_TEST": "Enter 'test' and 'Text' separated by comma into a text input",
         "ELEMENTSTEST_ENTER_TEST": "Enter 'test' into a textarea input",
-        "ELEMENTSTEST_PUT_DROPPABLE": "Drag answers #1 and #4 into droppable area",
+        "ELEMENTSTEST_PUT_DROPPABLE_GREEN": "Drag answers #1 and #4 into droppable area (any element is accepteble)",
+        "ELEMENTSTEST_PUT_DROPPABLE_RED": "Drag any element (olny red element are accepteble)",
 
         "RESULTS_TITLE": "Your scores",
         "RESULTS_START_TIME": "You started at",

@@ -4,8 +4,10 @@ function makeDraggable(elementName) {
     });
 }
 
-function makeDroppable(elementName) {
-    $('div.droppable[name="' + elementName + '"]').droppable({drop: function (event, ui) {
+function makeDroppable(elementName,args) {
+    $('div.droppable[name="' + elementName + '"]').droppable({
+      accept: args.join(','),
+      drop: function (event, ui) {
         var parentSelector = ui.draggable.parent().attr('name');
         ui.draggable.attr('data-parent', parentSelector);
         ui.draggable.appendTo('div.droppable[name="' + elementName + '"]');
