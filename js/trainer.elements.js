@@ -209,6 +209,9 @@ var LateX = null;
 
 (function ($, _Templatetor, _StepInvoker) {
     Radio = function (n) {
+
+        Element.call(this);
+
         if (typeof n === "string")
             this.setName(n);
         var checked = false;
@@ -246,6 +249,9 @@ var LateX = null;
 
     Radios =
         function (n) {
+
+            Element.call(this);
+
             if (typeof n === "string")
                 this.setName(n);
             var options = [];
@@ -288,6 +294,9 @@ var LateX = null;
 
     CheckBox =
         function (n) {
+
+            Element.call(this);
+
             if (typeof n === "string")
                 this.setName(n);
 
@@ -320,6 +329,9 @@ var LateX = null;
      */
     Select =
         function (n) {
+
+            Element.call(this);
+
             if (typeof n === "string")
                 this.setName(n);
             var options = [];
@@ -384,6 +396,9 @@ var LateX = null;
      */
     TextInput =
         function (n) {
+
+            Element.call(this);
+
             if (typeof n === "string")
                 this.setName(n);
             var placeholder = '{{ENTER_TEXT}}';
@@ -462,6 +477,9 @@ var LateX = null;
 
     DroppableArea =
         function (n) {
+
+            Element.call(this);
+
             if (typeof n === "string")
                 this.setName(n);
 
@@ -487,6 +505,9 @@ var LateX = null;
 
     DraggableGroup =
         function (n) {
+
+            Element.call(this);
+
             if (typeof n === "string")
                 this.setName(n);
             var options = [];
