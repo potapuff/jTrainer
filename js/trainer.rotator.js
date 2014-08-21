@@ -24,6 +24,17 @@ var Rotator = null;
             var nextButton = null;
             var prevButton = null;
 
+            this.defaultNextButtonAction = function() {Rotator.nextStep();}
+            this.defaultPrevButtonAction = function() {Rotator.prevStep();}
+
+            /**
+             *  Get Steps settings to allow change and reorder it.
+             *  @returns steps properties
+             */
+            this.getSteps = function(){
+              return settings;
+            }
+
             /**
              * Ties up an wrapped DOM element of Prev Button
              * @param o {jQuery} wrapped DOM element of Prev Button
@@ -57,7 +68,7 @@ var Rotator = null;
                     nextButton.removeClass('btn-default')
                         .addClass('btn-primary')
                         .removeClass('disabled')
-                        .attr('onclick', 'Rotator.nextStep()');
+                        .click(Rotator.goNext);
                 return this;
             };
 
@@ -70,9 +81,32 @@ var Rotator = null;
                     nextButton.addClass('disabled')
                         .removeClass('btn-primary')
                         .addClass('btn-default')
-                        .attr('onclick', '');
+                        .off('click');
                 return this;
             };
+
+            /**
+             * Run to next step via call default or binded action for prevStep button
+             */
+            this.goNext = function (){
+              (   Rotator.getSteps()
+               && Rotator.getSteps()[visibleStep]['NextButtonAction']
+               || Rotator.defaultNextButtonAction)();
+            }
+
+            /**
+             * Bind new callback for nextStep button
+             * @param step - step to setting action
+             * @param action - callback for next Button in current st
+             */
+            this.bindNextButtonAction = function (step,action) {
+                if (typeof(action) === 'function'){
+                   if (this.getSteps()){
+                      this.getSteps()[step]['NextButtonAction'] = action;
+                   }
+                }
+                return this;
+            }
 
             /**
              * Enables prev button
@@ -81,7 +115,7 @@ var Rotator = null;
             this.enablePrevButton = function () {
                 if (prevButton)
                     prevButton.removeClass('disabled')
-                        .attr('onclick', 'Rotator.prevStep()');
+                        .click(Rotator.goPrev);
                 return this;
             };
 
@@ -91,10 +125,34 @@ var Rotator = null;
              */
             this.disablePrevButton = function () {
                 if (prevButton)
-                    prevButton.addClass('disabled')
-                        .attr('onclick', '');
+                    prevButton
+                        .addClass('disabled')
+                        .off('click');
                 return this;
             };
+
+            /**
+             * Run to previous step via call default or binded action for prevStep button
+             */
+            this.goPrev = function (){
+              (   Rotator.getSteps()
+               && Rotator.getSteps()[visibleStep]['PrevButtonAction']
+               || Rotator.defaultPrevButtonAction)();
+            }
+
+            /**
+             * Bind new callback for prevStep button
+             * @param step - step to setting action
+             * @param action - callback for prev Button in current st
+             */
+            this.bindPrevButtonAction = function (step,action) {
+                if (typeof(action) === 'function'){
+                   if (this.getSteps()){
+                      this.getSteps()[step]['PrevButtonAction'] = action;
+                   }
+                }
+                return this;
+            }
 
             /**
              * Sets patch to steps files

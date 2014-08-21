@@ -1,4 +1,6 @@
 var elementstest = function () {
+
+    var config =  window.Service.getTrainerConfig();
     var validator = null;
     var plot = null;
 
@@ -18,9 +20,19 @@ var elementstest = function () {
             .addValidator($('div.droppable[name="test-droppable"]'), function(n) { return n === '1,4' || n === '4,1'}, true) // Validate value with function
             .setStrictMode(true)
             .setIgnoreCase(false);
-        $('#validatorInvoker').click(function () {
-            validator.validate();
+        Rotator.bindNextButtonAction(1,function () {
+            if (validator.validate()){
+               if (config['has_falls']) {
+                  var last_step = Rotator.getSteps()[Rotator.getSteps().length-1];
+                  last_step.filename = 'results_other';
+               }
+               Rotator.nextStep();
+            } else {
+              config['has_falls'] = true;
+              Rotator.enableNextButton();
+            }
         });
+        Rotator.enableNextButton();
     }
 
     this.mustache = function () {
